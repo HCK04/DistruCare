@@ -73,26 +73,35 @@ export default function SettingsScreen() {
     setSaving(true);
     const amStr = dateToTimeString(amTime);
     const pmStr = dateToTimeString(pmTime);
-    await save(amList, pmList, amStr, pmStr, notifEnabled);
+    try {
+      await save(amList, pmList, amStr, pmStr, notifEnabled);
 
-    if (notifEnabled) {
-      const granted = await requestNotificationPermission();
-      if (granted) {
-        await scheduleDoseReminders(amStr, pmStr, amList, pmList);
-      }
-    } else {
-      await cancelAllReminders();
-    }
-
-    if (hwStatus === 'connected') {
+      // Les notifications ne sont pas critiques : un échec (Expo Go, web,
+      // permission refusée…) ne doit pas empêcher l'enregistrement du programme.
       try {
-        await syncSchedule({ am_time: amStr, pm_time: pmStr, medication_name: combinedMedLabel(amList, pmList) });
-      } catch { /* non bloquant : la synchro se fera à la prochaine connexion */ }
-    }
+        if (notifEnabled) {
+          const granted = await requestNotificationPermission();
+          if (granted) {
+            await scheduleDoseReminders(amStr, pmStr, amList, pmList);
+          }
+        } else {
+          await cancelAllReminders();
+        }
+      } catch { /* non bloquant : les rappels seront reprogrammés plus tard */ }
 
-    setSaving(false);
-    const hwNote = hwStatus === 'connected' ? ' Synchronisé avec le distributeur.' : '';
-    Alert.alert('Enregistré', `Votre programme a été mis à jour.${hwNote}`);
+      if (hwStatus === 'connected') {
+        try {
+          await syncSchedule({ am_time: amStr, pm_time: pmStr, medication_name: combinedMedLabel(amList, pmList) });
+        } catch { /* non bloquant : la synchro se fera à la prochaine connexion */ }
+      }
+
+      const hwNote = hwStatus === 'connected' ? ' Synchronisé avec le distributeur.' : '';
+      Alert.alert('Enregistré', `Votre programme a été mis à jour.${hwNote}`);
+    } catch (e) {
+      Alert.alert('Erreur', "L'enregistrement a échoué. Veuillez réessayer.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleReset = async () => {
