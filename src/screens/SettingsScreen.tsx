@@ -168,16 +168,21 @@ export default function SettingsScreen() {
 
         {/* Heure du matin */}
         <SectionLabel styles={styles} label="Heure de la dose du matin" />
-        <TouchableOpacity style={styles.timeButton} onPress={() => setShowAmPicker(true)} activeOpacity={0.8}>
+        <TouchableOpacity
+          style={[styles.timeButton, !amActive && styles.timeButtonDisabled]}
+          onPress={() => setShowAmPicker(true)}
+          disabled={!amActive}
+          activeOpacity={0.8}
+        >
           <View style={styles.timeLeft}>
-            <Ionicons name="partly-sunny-outline" size={fonts.lg} color={Colors.accent} />
-            <Text style={styles.timeButtonText}>
+            <Ionicons name="partly-sunny-outline" size={fonts.lg} color={amActive ? Colors.accent : Colors.textMuted} />
+            <Text style={[styles.timeButtonText, !amActive && styles.timeButtonTextDisabled]}>
               {amTime.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
             </Text>
           </View>
-          <Text style={styles.timeEditLabel}>Modifier</Text>
+          <Text style={styles.timeEditLabel}>{amActive ? 'Modifier' : 'Désactivée'}</Text>
         </TouchableOpacity>
-        {showAmPicker && (
+        {showAmPicker && amActive && (
           <DateTimePicker
             value={amTime}
             mode="time"
@@ -193,16 +198,21 @@ export default function SettingsScreen() {
 
         {/* Heure du soir */}
         <SectionLabel styles={styles} label="Heure de la dose du soir" />
-        <TouchableOpacity style={styles.timeButton} onPress={() => setShowPmPicker(true)} activeOpacity={0.8}>
+        <TouchableOpacity
+          style={[styles.timeButton, !pmActive && styles.timeButtonDisabled]}
+          onPress={() => setShowPmPicker(true)}
+          disabled={!pmActive}
+          activeOpacity={0.8}
+        >
           <View style={styles.timeLeft}>
-            <Ionicons name="moon-outline" size={fonts.lg} color={Colors.accent} />
-            <Text style={styles.timeButtonText}>
+            <Ionicons name="moon-outline" size={fonts.lg} color={pmActive ? Colors.accent : Colors.textMuted} />
+            <Text style={[styles.timeButtonText, !pmActive && styles.timeButtonTextDisabled]}>
               {pmTime.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
             </Text>
           </View>
-          <Text style={styles.timeEditLabel}>Modifier</Text>
+          <Text style={styles.timeEditLabel}>{pmActive ? 'Modifier' : 'Désactivée'}</Text>
         </TouchableOpacity>
-        {showPmPicker && (
+        {showPmPicker && pmActive && (
           <DateTimePicker
             value={pmTime}
             mode="time"
@@ -403,11 +413,18 @@ function makeStyles(f: Fonts) {
       marginBottom: Spacing.lg,
       minHeight: 64,
     },
+    timeButtonDisabled: {
+      opacity: 0.5,
+      backgroundColor: Colors.bgCardAlt,
+    },
     timeLeft: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
     timeButtonText: {
       fontSize: f.xxl,
       fontWeight: FontWeights.bold,
       color: Colors.textPrimary,
+    },
+    timeButtonTextDisabled: {
+      color: Colors.textMuted,
     },
     timeEditLabel: {
       fontSize: f.sm,
