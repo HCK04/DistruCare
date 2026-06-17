@@ -46,6 +46,7 @@ export default function App() {
 function Root() {
   const { fonts } = useUI();
   const [ready, setReady] = useState(false);
+  const [minSplashDone, setMinSplashDone] = useState(false);
   const [isSetup, setIsSetup] = useState(false);
   const [error, setError] = useState('');
 
@@ -63,16 +64,23 @@ function Root() {
     })();
   }, []);
 
+  // Always show the splash for at least ~1.8 s so it appears on every launch,
+  // even when the database initialises almost instantly.
+  useEffect(() => {
+    const t = setTimeout(() => setMinSplashDone(true), 1800);
+    return () => clearTimeout(t);
+  }, []);
+
   const handleOnboardingComplete = async () => {
     await markSetupComplete();
     setIsSetup(true);
   };
 
-  if (!ready) {
+  if (!ready || !minSplashDone) {
     return (
       <View style={styles.splash}>
         <StatusBar style="dark" />
-        <Text style={styles.splashTitle}>DisrtuCare</Text>
+        <Text style={styles.splashTitle}>Distrucare</Text>
         <Text style={styles.splashSub}>Votre compagnon de prise de médicaments</Text>
         <ActivityIndicator color={Colors.accent} style={{ marginTop: 32 }} />
       </View>

@@ -16,7 +16,7 @@ type LogEntry = { label: string; time: string };
 export default function HardwareScreen() {
   const { fonts } = useUI();
   const styles = useMemo(() => makeStyles(fonts), [fonts]);
-  const { status, lastEvent, savedIp, connect, disconnect, syncSchedule, testLed, testMotor } =
+  const { status, lastEvent, savedIp, connect, disconnect, syncSchedule, runDiag, runSelfTest, testMotor } =
     useHardware();
   const { schedule } = useSchedule();
 
@@ -141,19 +141,32 @@ export default function HardwareScreen() {
             />
             <CtrlBtn
               fonts={fonts} styles={styles}
-              label="LED allumée"
-              icon="bulb-outline"
-              loading={busy === 'led_on'}
+              label="Diagnostic"
+              icon="pulse-outline"
+              loading={busy === 'diag'}
               disabled={!isConnected}
-              onPress={() => run('led_on', () => testLed(true))}
+              onPress={() => run('diag', async () => {
+                const d = await runDiag();
+                Alert.alert(
+                  'Diagnostic du distributeur',
+                  `Écran LCD : ${d.lcd ? 'détecté ✓' : 'absent ✗'}\n` +
+                  `Horloge RTC : ${d.rtc_hw ? (d.rtc_running ? 'active ✓' : 'présente, arrêtée') : 'logicielle'}\n` +
+                  `Bus I2C : ${d.i2c.length ? d.i2c.join(', ') : 'aucun périphérique'}\n` +
+                  `Signal WiFi : ${d.rssi} dBm\n` +
+                  `Mémoire libre : ${(d.heap / 1024).toFixed(1)} Ko`,
+                );
+              })}
             />
             <CtrlBtn
               fonts={fonts} styles={styles}
-              label="LED éteinte"
-              icon="bulb-outline"
-              loading={busy === 'led_off'}
+              label="Auto-test moteur"
+              icon="construct-outline"
+              loading={busy === 'selftest'}
               disabled={!isConnected}
-              onPress={() => run('led_off', () => testLed(false))}
+              onPress={() => run('selftest', async () => {
+                await runSelfTest();
+                Alert.alert('Auto-test terminé', 'Le moteur a effectué sa séquence de test complète.');
+              })}
             />
             <CtrlBtn
               fonts={fonts} styles={styles}
@@ -184,9 +197,9 @@ export default function HardwareScreen() {
           <View style={styles.noteCard}>
             <Ionicons name="information-circle-outline" size={fonts.md} color={Colors.textMuted} />
             <Text style={styles.noteText}>
-              L'appareil affiche son adresse IP sur l'écran LCD pendant 5 secondes au démarrage.
-              Votre téléphone et le distributeur doivent être sur le même réseau WiFi (
-              <Text style={styles.noteHighlight}>MG1</Text>).
+              L'appareil affiche son adresse IP sur l'écran LCD pendant 20 secondes au démarrage.
+              Votre téléphone et le distributeur doivent être sur le même réseau WiFi (le partage
+              de connexion <Text style={styles.noteHighlight}>iPhone</Text>).
             </Text>
           </View>
         </ScrollView>

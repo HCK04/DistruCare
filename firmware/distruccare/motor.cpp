@@ -34,9 +34,22 @@ static void applyStep() {
 }
 
 void motorRotate(int slots) {
-  // STEPS_PER_SLOT is already expressed in HALF-steps (we drive in half-step),
-  // so advance exactly that many half-steps per slot — no extra factor.
-  long totalSteps = (long)slots * STEPS_PER_SLOT;
+  // STEPS_PER_SLOT is a fractional half-step count (the 28BYJ-48 gearbox is
+  // 63.68395:1, so a slot is ~2037.9 half-steps, not a round number). We must
+  // round to whole steps, but keep the leftover fraction in a static remainder
+  // and add it to the NEXT call. That way the rounding error never accumulates
+  // and every slot stays locked to its true position, run after run.
+  static float remainder = 0.0f;
+
+  float wanted = (float)slots * STEPS_PER_SLOT + remainder;
+  long totalSteps = (long)(wanted + 0.5f);   // round to nearest whole half-step
+  remainder = wanted - (float)totalSteps;    // carry the fraction forward
+
+  // Add the friction push AFTER the remainder is computed, so these extra steps
+  // compensate the badly-mounted gears' slippage without polluting the geometric
+  // step count. A fraction of a slot (e.g. 0.25 = +25%) per slot commanded.
+  totalSteps += (long)((float)slots * STEPS_PER_SLOT * FRICTION_COMP_FRACTION + 0.5f);
+
   for (long i = 0; i < totalSteps; i++) {
     applyStep();
   }

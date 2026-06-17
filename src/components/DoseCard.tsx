@@ -105,6 +105,15 @@ export default function DoseCard({
             Enregistrée à {new Date(log!.logged_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
           </Text>
         )}
+
+        {!isLogged && disabled && (
+          <View style={styles.deviceHint}>
+            <Ionicons name="hardware-chip-outline" size={fonts.sm} color={Colors.textMuted} />
+            <Text style={styles.deviceHintText}>
+              À confirmer sur le distributeur
+            </Text>
+          </View>
+        )}
       </View>
     </Animated.View>
   );
@@ -202,6 +211,16 @@ function makeStyles(f: Fonts) {
     loggedAt: {
       fontSize: f.sm,
       color: Colors.textMuted,
+    },
+    deviceHint: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: Spacing.xs,
+    },
+    deviceHintText: {
+      fontSize: f.sm,
+      color: Colors.textMuted,
+      fontStyle: 'italic',
     },
   });
 }

@@ -90,6 +90,15 @@ class HttpService {
     if (!resp.ok) throw new Error(`Device rejected the command (HTTP ${resp.status})`);
   }
 
+  // GET a JSON endpoint (e.g. /diag, /selftest). Self-test blocks the device for
+  // several seconds, so allow a longer timeout than the default for those.
+  async get<T = any>(endpoint: string, timeoutMs: number = TIMEOUT_MS): Promise<T> {
+    if (!this.baseUrl) throw new Error('Not connected');
+    const resp = await fetch(`${this.baseUrl}/${endpoint}`, { signal: withTimeout(timeoutMs) });
+    if (!resp.ok) throw new Error(`Device rejected the command (HTTP ${resp.status})`);
+    return resp.json() as Promise<T>;
+  }
+
   // ── Polling ──────────────────────────────────────────────
 
   private startPolling(): void {

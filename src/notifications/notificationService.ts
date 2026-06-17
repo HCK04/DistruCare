@@ -21,10 +21,14 @@ export async function requestNotificationPermission(): Promise<boolean> {
 export async function scheduleDoseReminders(
   amTime: string,
   pmTime: string,
-  medicationName: string
+  amMedList: string[],
+  pmMedList: string[]
 ): Promise<void> {
   // Cancel all existing scheduled notifications
   await Notifications.cancelAllScheduledNotificationsAsync();
+
+  const amLabel = amMedList.join(', ') || 'médicament';
+  const pmLabel = pmMedList.join(', ') || 'médicament';
 
   const [amHour, amMin] = amTime.split(':').map(Number);
   const [pmHour, pmMin] = pmTime.split(':').map(Number);
@@ -34,7 +38,7 @@ export async function scheduleDoseReminders(
     await Notifications.scheduleNotificationAsync({
       content: {
         title: 'Dose du matin',
-        body: `C'est l'heure de prendre votre ${medicationName}.`,
+        body: `C'est l'heure de prendre votre ${amLabel}.`,
         sound: true,
       },
       trigger: {
@@ -48,7 +52,7 @@ export async function scheduleDoseReminders(
     await Notifications.scheduleNotificationAsync({
       content: {
         title: 'Dose du soir',
-        body: `N'oubliez pas votre ${medicationName} ce soir.`,
+        body: `N'oubliez pas votre ${pmLabel} ce soir.`,
         sound: true,
       },
       trigger: {
@@ -66,7 +70,7 @@ export async function scheduleDoseReminders(
     await Notifications.scheduleNotificationAsync({
       content: {
         title: 'Rappel',
-        body: `Avez-vous pris votre ${medicationName} du matin ? Pensez à le confirmer dans DisrtuCare.`,
+        body: `Avez-vous pris votre ${amLabel} du matin ? Pensez à le confirmer dans Distrucare.`,
         sound: true,
       },
       trigger: {
@@ -83,7 +87,7 @@ export async function scheduleDoseReminders(
     await Notifications.scheduleNotificationAsync({
       content: {
         title: 'Rappel',
-        body: `Avez-vous pris votre ${medicationName} du soir ? Pensez à le confirmer dans DisrtuCare.`,
+        body: `Avez-vous pris votre ${pmLabel} du soir ? Pensez à le confirmer dans Distrucare.`,
         sound: true,
       },
       trigger: {

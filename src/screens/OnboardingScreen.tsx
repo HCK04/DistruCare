@@ -61,9 +61,12 @@ export default function OnboardingScreen({ onComplete }: Props) {
     setSaving(true);
     const amStr = dateToTimeString(amTime);
     const pmStr = dateToTimeString(pmTime);
-    await updateSchedule(medName.trim(), amStr, pmStr, true);
+    const name = medName.trim();
+    // Onboarding captures one name; seed it as the single morning & evening
+    // medicine. More can be added/removed per dose later in Réglages.
+    await updateSchedule([name], [name], amStr, pmStr, true);
     const granted = await requestNotificationPermission();
-    if (granted) await scheduleDoseReminders(amStr, pmStr, medName.trim());
+    if (granted) await scheduleDoseReminders(amStr, pmStr, [name], [name]);
     setSaving(false);
     onComplete();
   };
@@ -96,7 +99,7 @@ export default function OnboardingScreen({ onComplete }: Props) {
             {step === 'welcome' && (
               <>
                 <HeroIcon name="medkit-outline" fonts={fonts} styles={styles} />
-                <Text style={styles.headline}>Bienvenue sur{'\n'}DisrtuCare</Text>
+                <Text style={styles.headline}>Bienvenue sur{'\n'}Distrucare</Text>
                 <Text style={styles.body}>
                   Votre compagnon de prise de médicaments.{'\n'}
                   Configurons votre programme en quelques étapes pour ne plus jamais oublier une dose.

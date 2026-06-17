@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
   TextInput, Switch, Alert, Platform,
@@ -18,7 +18,10 @@ import {
   requestNotificationPermission,
 } from '../notifications/notificationService';
 import { timeStringToDate, dateToTimeString } from '../utils/dateHelpers';
+import { combinedMedLabel, parseMedList } from '../db/queries';
 import { useHardware } from '../hardware/HardwareContext';
+
+type MedItem = { id: number; name: string };
 
 export default function SettingsScreen() {
   const { fonts, largeText, setLargeText } = useUI();
@@ -27,7 +30,9 @@ export default function SettingsScreen() {
   const { resetToday } = useTodayLogs();
   const { status: hwStatus, syncSchedule } = useHardware();
 
-  const [medName, setMedName] = useState('');
+  const [amMeds, setAmMeds] = useState<MedItem[]>([]);
+  const [pmMeds, setPmMeds] = useState<MedItem[]>([]);
+  const nextId = useRef(1);
   const [amTime, setAmTime] = useState(new Date());
   const [pmTime, setPmTime] = useState(new Date());
   const [notifEnabled, setNotifEnabled] = useState(true);
@@ -37,32 +42,49 @@ export default function SettingsScreen() {
   const [showAmPicker, setShowAmPicker] = useState(false);
   const [showPmPicker, setShowPmPicker] = useState(false);
 
+  // Convert a stored list into editable rows; always keep at least one input row.
+  const toItems = useCallback((raw: string): MedItem[] => {
+    const names = parseMedList(raw);
+    const list = (names.length ? names : ['']).map((name) => ({ id: nextId.current++, name }));
+    return list;
+  }, []);
+
   useFocusEffect(
     useCallback(() => {
       if (schedule) {
-        setMedName(schedule.medication_name);
+        setAmMeds(toItems(schedule.am_medication_name));
+        setPmMeds(toItems(schedule.pm_medication_name));
         setAmTime(timeStringToDate(schedule.am_time));
         setPmTime(timeStringToDate(schedule.pm_time));
         setNotifEnabled(schedule.notifications_enabled === 1);
       }
-    }, [schedule])
+    }, [schedule, toItems])
   );
 
+  // List editing helpers (shared by morning & evening lists).
+  const editMed = (setList: React.Dispatch<React.SetStateAction<MedItem[]>>, id: number, name: string) =>
+    setList((prev) => prev.map((m) => (m.id === id ? { ...m, name } : m)));
+  const addMed = (setList: React.Dispatch<React.SetStateAction<MedItem[]>>) =>
+    setList((prev) => [...prev, { id: nextId.current++, name: '' }]);
+  const removeMed = (setList: React.Dispatch<React.SetStateAction<MedItem[]>>, id: number) =>
+    setList((prev) => (prev.length <= 1 ? prev : prev.filter((m) => m.id !== id)));
+
   const handleSave = async () => {
-    if (!medName.trim()) {
-      Alert.alert('Champ requis', 'Veuillez saisir le nom du médicament.');
+    const amList = amMeds.map((m) => m.name.trim()).filter(Boolean);
+    const pmList = pmMeds.map((m) => m.name.trim()).filter(Boolean);
+    if (!amList.length || !pmList.length) {
+      Alert.alert('Champ requis', 'Ajoutez au moins un médicament pour le matin et pour le soir.');
       return;
     }
     setSaving(true);
     const amStr = dateToTimeString(amTime);
     const pmStr = dateToTimeString(pmTime);
-    const trimmedName = medName.trim();
-    await save(trimmedName, amStr, pmStr, notifEnabled);
+    await save(amList, pmList, amStr, pmStr, notifEnabled);
 
     if (notifEnabled) {
       const granted = await requestNotificationPermission();
       if (granted) {
-        await scheduleDoseReminders(amStr, pmStr, trimmedName);
+        await scheduleDoseReminders(amStr, pmStr, amList, pmList);
       }
     } else {
       await cancelAllReminders();
@@ -70,7 +92,7 @@ export default function SettingsScreen() {
 
     if (hwStatus === 'connected') {
       try {
-        await syncSchedule({ am_time: amStr, pm_time: pmStr, medication_name: trimmedName });
+        await syncSchedule({ am_time: amStr, pm_time: pmStr, medication_name: combinedMedLabel(amList, pmList) });
       } catch { /* non bloquant : la synchro se fera à la prochaine connexion */ }
     }
 
@@ -122,18 +144,29 @@ export default function SettingsScreen() {
           />
         </View>
 
-        {/* Nom du médicament */}
-        <SectionLabel styles={styles} label="Nom du médicament" />
-        <View style={styles.inputWrapper}>
-          <TextInput
-            style={styles.input}
-            value={medName}
-            onChangeText={setMedName}
-            placeholder="ex. Metformine 500 mg"
-            placeholderTextColor={Colors.textMuted}
-            maxLength={50}
-          />
-        </View>
+        {/* Médicaments du matin */}
+        <MedListSection
+          styles={styles} fonts={fonts}
+          label="Médicaments du matin"
+          icon="partly-sunny-outline"
+          placeholder="ex. Metformine 500 mg"
+          items={amMeds}
+          onEdit={(id, name) => editMed(setAmMeds, id, name)}
+          onAdd={() => addMed(setAmMeds)}
+          onRemove={(id) => removeMed(setAmMeds, id)}
+        />
+
+        {/* Médicaments du soir */}
+        <MedListSection
+          styles={styles} fonts={fonts}
+          label="Médicaments du soir"
+          icon="moon-outline"
+          placeholder="ex. Atorvastatine 20 mg"
+          items={pmMeds}
+          onEdit={(id, name) => editMed(setPmMeds, id, name)}
+          onAdd={() => addMed(setPmMeds)}
+          onRemove={(id) => removeMed(setPmMeds, id)}
+        />
 
         {/* Heure du matin */}
         <SectionLabel styles={styles} label="Heure de la dose du matin" />
@@ -223,7 +256,7 @@ export default function SettingsScreen() {
 
         {/* Infos */}
         <View style={styles.info}>
-          <Text style={styles.infoText}>DisrtuCare v1.0.0</Text>
+          <Text style={styles.infoText}>Distrucare v1.0.0</Text>
           <Text style={styles.infoText}>Hors-ligne · Sécurisé · Toujours avec vous</Text>
         </View>
       </ScrollView>
@@ -243,6 +276,53 @@ export default function SettingsScreen() {
 
 function SectionLabel({ styles, label }: { styles: any; label: string }) {
   return <Text style={styles.sectionLabel}>{label}</Text>;
+}
+
+function MedListSection({
+  styles, fonts, label, icon, placeholder, items, onEdit, onAdd, onRemove,
+}: {
+  styles: any;
+  fonts: Fonts;
+  label: string;
+  icon: keyof typeof Ionicons.glyphMap;
+  placeholder: string;
+  items: MedItem[];
+  onEdit: (id: number, name: string) => void;
+  onAdd: () => void;
+  onRemove: (id: number) => void;
+}) {
+  const single = items.length <= 1;
+  return (
+    <>
+      <SectionLabel styles={styles} label={label} />
+      {items.map((item) => (
+        <View key={item.id} style={styles.medRow}>
+          <Ionicons name={icon} size={fonts.lg} color={Colors.accent} />
+          <TextInput
+            style={styles.medInput}
+            value={item.name}
+            onChangeText={(t) => onEdit(item.id, t)}
+            placeholder={placeholder}
+            placeholderTextColor={Colors.textMuted}
+            maxLength={50}
+          />
+          <TouchableOpacity
+            onPress={() => onRemove(item.id)}
+            disabled={single}
+            style={styles.medRemoveBtn}
+            accessibilityLabel="Retirer ce médicament"
+            activeOpacity={0.7}
+          >
+            <Ionicons name="close-circle" size={fonts.xl} color={single ? Colors.border : Colors.missed} />
+          </TouchableOpacity>
+        </View>
+      ))}
+      <TouchableOpacity style={styles.addMedBtn} onPress={onAdd} activeOpacity={0.8}>
+        <Ionicons name="add-circle-outline" size={fonts.md} color={Colors.accent} />
+        <Text style={styles.addMedText}>Ajouter un médicament</Text>
+      </TouchableOpacity>
+    </>
+  );
 }
 
 function makeStyles(f: Fonts) {
@@ -287,6 +367,47 @@ function makeStyles(f: Fonts) {
       paddingHorizontal: Spacing.md,
       paddingVertical: 16,
       minHeight: 58,
+    },
+    medRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: Spacing.sm,
+      backgroundColor: Colors.bgCard,
+      borderRadius: Radius.md,
+      borderWidth: 1,
+      borderColor: Colors.border,
+      paddingLeft: Spacing.md,
+      paddingRight: Spacing.xs,
+      marginBottom: Spacing.sm,
+    },
+    medInput: {
+      flex: 1,
+      color: Colors.textPrimary,
+      fontSize: f.lg,
+      fontWeight: FontWeights.medium,
+      paddingVertical: 16,
+      minHeight: 58,
+    },
+    medRemoveBtn: {
+      padding: Spacing.xs,
+    },
+    addMedBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: Spacing.xs,
+      paddingVertical: 12,
+      marginBottom: Spacing.lg,
+      borderRadius: Radius.md,
+      borderWidth: 1,
+      borderColor: Colors.borderAccent,
+      borderStyle: 'dashed',
+      backgroundColor: Colors.accentDim,
+    },
+    addMedText: {
+      color: Colors.accent,
+      fontSize: f.sm,
+      fontWeight: FontWeights.semibold,
     },
 
     timeButton: {

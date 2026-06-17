@@ -23,7 +23,6 @@
 #include <EEPROM.h>
 #include <Wire.h>
 #include <ESP8266WiFi.h>
-#include <ESP8266WiFiMulti.h>
 #include <ESP8266WebServer.h>
 #include <ArduinoJson.h>
 #include "config.h"
@@ -34,17 +33,9 @@
 // ── HTTP server ────────────────────────────────────────────
 static ESP8266WebServer server(HTTP_PORT);
 
-// ── Known WiFi networks ────────────────────────────────────
-// The device joins whichever of these is in range (strongest first) and
-// automatically switches/reconnects if one drops. Add or edit entries here,
-// then flash ONCE — no reflashing to move between these networks afterwards.
-static ESP8266WiFiMulti wifiMulti;
-static void setupWifiList() {
-  wifiMulti.addAP("MG1",                   "doc.client@123");
-  wifiMulti.addAP("La_Fibre_dOrange_0E96", "DQKFSQCZ3QCHRAUTT7");
-  wifiMulti.addAP("iPhone",                "aya123456789");
-  // wifiMulti.addAP("Network_name",       "password");   // <- add more here
-}
+// ── WiFi ───────────────────────────────────────────────────
+// Single-network build: the device connects ONLY to Aya's iPhone hotspot
+// (WIFI_SSID / WIFI_PASS in config.h). No other network is ever joined.
 
 // ── Schedule ──────────────────────────────────────────────
 static uint8_t amHour = 8,  amMin = 0;
@@ -353,12 +344,17 @@ void setup() {
   // ── Connect to WiFi (multi-network) ──────────────────────
   // Tries every network in setupWifiList() and joins whichever is available.
   WiFi.mode(WIFI_STA);
-  setupWifiList();
-  lcdShowStatus("Searching for", "known WiFi...");
 
-  uint8_t tries = 0;
-  while (wifiMulti.run(5000) != WL_CONNECTED && tries < 8) {
-    tries++;   // wifiMulti.run() scans + connects, 5 s timeout per attempt
+  // ── Connect ONLY to Aya's iPhone hotspot ─────────────────
+  // No fallback to any other network. The hotspot can be slow to appear (iOS
+  // keeps it dormant until a known device probes for it), so wait up to ~30 s.
+  // If it still isn't up, run offline; maintainWifi() keeps retrying the iPhone.
+  lcdShowStatus("Connecting to", "Aya's iPhone...");
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+  uint8_t pTries = 0;
+  while (WiFi.status() != WL_CONNECTED && pTries < 60) {   // ~30 s (60 x 500 ms)
+    delay(500);
+    pTries++;
   }
 
   if (WiFi.status() == WL_CONNECTED) {
@@ -366,7 +362,7 @@ void setup() {
     Serial.println("Connected to " + WiFi.SSID() + "  IP: " + ip);
     // Show the joined network + IP on the LCD
     lcdShowStatus(WiFi.SSID().c_str(), ip.c_str());
-    delay(5000);  // leave it visible for 5 s
+    delay(20000);  // leave the IP on screen for 20 s so it can be read/noted
   } else {
     lcdShowStatus("No known WiFi", "Runs offline");
     Serial.println("No known WiFi found — running offline; will keep retrying.");
@@ -399,8 +395,7 @@ void setup() {
   Serial.println("HTTP server ready on port " + String(HTTP_PORT));
 }
 
-// Keep WiFi alive: if we drop, re-scan the known-network list and join the best
-// one that's currently available (this also auto-switches networks if you move).
+// Keep WiFi alive: if we drop, keep retrying Aya's iPhone hotspot (only network).
 static unsigned long lastWifiAttempt = 0;
 static bool wasConnected = false;
 
@@ -411,6 +406,7 @@ static void maintainWifi() {
       String ip = WiFi.localIP().toString();
       Serial.println("WiFi connected to " + WiFi.SSID() + "  IP: " + ip);
       lcdShowStatus(WiFi.SSID().c_str(), ip.c_str());
+      delay(20000);  // hold the IP on screen for 20 s when it joins after boot
     }
     return;
   }
@@ -418,7 +414,7 @@ static void maintainWifi() {
   unsigned long now = millis();
   if (now - lastWifiAttempt < 8000) return;   // retry every ~8 s
   lastWifiAttempt = now;
-  wifiMulti.run(5000);   // re-scan and join the best available known network
+  WiFi.begin(WIFI_SSID, WIFI_PASS);   // keep trying the iPhone hotspot
 }
 
 void loop() {

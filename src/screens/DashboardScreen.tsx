@@ -157,21 +157,25 @@ export default function DashboardScreen() {
 
         {schedule && (
           <>
+            {/* Lecture seule : la confirmation se fait UNIQUEMENT au bouton du
+                distributeur. L'utilisateur ne marque pas les prises dans l'app. */}
             <DoseCard
               type="AM"
               scheduledTime={formatTime(timeStringToDate(schedule.am_time))}
               log={amLog}
-              onMarkTaken={() => logDose('AM', 'taken')}
-              onMarkMissed={() => logDose('AM', 'missed')}
-              onMarkLate={() => logDose('AM', 'late')}
+              disabled
+              onMarkTaken={() => {}}
+              onMarkMissed={() => {}}
+              onMarkLate={() => {}}
             />
             <DoseCard
               type="PM"
               scheduledTime={formatTime(timeStringToDate(schedule.pm_time))}
               log={pmLog}
-              onMarkTaken={() => logDose('PM', 'taken')}
-              onMarkMissed={() => logDose('PM', 'missed')}
-              onMarkLate={() => logDose('PM', 'late')}
+              disabled
+              onMarkTaken={() => {}}
+              onMarkMissed={() => {}}
+              onMarkLate={() => {}}
             />
           </>
         )}

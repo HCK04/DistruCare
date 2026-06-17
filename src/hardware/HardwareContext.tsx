@@ -10,6 +10,15 @@ interface ScheduleLike {
   medication_name: string;
 }
 
+export interface DiagResult {
+  rtc_hw: boolean;
+  rtc_running: boolean;
+  lcd: boolean;
+  i2c: string[];
+  heap: number;
+  rssi: number;
+}
+
 interface HardwareCtx {
   status:       ConnectionStatus;
   lastEvent:    HardwareEvent | null;
@@ -17,7 +26,8 @@ interface HardwareCtx {
   connect:      (ip?: string) => Promise<void>;
   disconnect:   () => void;
   syncSchedule: (schedule: ScheduleLike) => Promise<void>;
-  testLed:      (on: boolean) => Promise<void>;
+  runDiag:      () => Promise<DiagResult>;
+  runSelfTest:  () => Promise<void>;
   testMotor:    (slots?: number) => Promise<void>;
   requestStatus:() => Promise<void>;
 }
@@ -58,8 +68,14 @@ export function HardwareProvider({ children }: { children: React.ReactNode }) {
     await httpService.post('sync', { am: s.am_time, pm: s.pm_time, med: s.medication_name });
   }, []);
 
-  const testLed = useCallback(async (on: boolean) => {
-    await httpService.post('led', { state: on ? 1 : 0 });
+  const runDiag = useCallback(async () => {
+    return await httpService.get<DiagResult>('diag');
+  }, []);
+
+  const runSelfTest = useCallback(async () => {
+    // The self-test spins the motor through its full coil-chase + rotation,
+    // which blocks the device for ~7 s — give it a generous timeout.
+    await httpService.get('selftest', 15_000);
   }, []);
 
   const testMotor = useCallback(async (slots = 1) => {
@@ -73,7 +89,7 @@ export function HardwareProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <HardwareContext.Provider
-      value={{ status, lastEvent, savedIp, connect, disconnect, syncSchedule, testLed, testMotor, requestStatus }}
+      value={{ status, lastEvent, savedIp, connect, disconnect, syncSchedule, runDiag, runSelfTest, testMotor, requestStatus }}
     >
       {children}
     </HardwareContext.Provider>

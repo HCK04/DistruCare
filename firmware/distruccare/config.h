@@ -1,8 +1,11 @@
 #pragma once
 
 // ── WiFi ──────────────────────────────────────────────────
-// The list of known networks lives in distruccare.ino -> setupWifiList().
-// The device joins whichever one is available. Add/edit networks there.
+// This build connects to ONE network only: Aya's iPhone personal hotspot.
+// Nothing else is tried. On the phone, enable "Maximize Compatibility"
+// (2.4 GHz) so the ESP8266 can see the hotspot.
+#define WIFI_SSID  "iPhone"
+#define WIFI_PASS  "aya123456789."
 
 // ── NodeMCU V3 (ESP8266) pin mapping ──────────────────────
 // Using D-number labels that match the silkscreen on the board.
@@ -34,22 +37,35 @@
 #define BUTTON_PIN D3   // GPIO0, INPUT_PULLUP
 
 // ── Motor constants (28BYJ-48, half-step drive) ────────────
-// 28BYJ-48: 2048 full steps/rev  ->  4096 HALF-steps per stepper revolution.
+// The 28BYJ-48's internal gearbox is NOT 64:1 — it is 63.68395:1. So one true
+// OUTPUT revolution is 32 * 63.68395 = 2037.9 full steps -> 4075.77 HALF-steps,
+// NOT the often-quoted 4096. Commanding the rounded 4096/2048 makes every slot
+// over-rotate by ~10 half-steps; that fractional error compounds rotation after
+// rotation, so the compartments slowly drift out of alignment ("each turn ends
+// a little shorter than the last"). Using the real count + a fractional
+// remainder (see motor.cpp) keeps every slot on its true position forever.
 //
 // Rotation per slot follows the Instructables "Automatic Pill / Medication
 // Dispenser" mechanism: a 7.5:1 reduction gear turns a 15-compartment
-// container, so the stepper makes EXACTLY half a revolution (180 deg) to
-// advance the container by one compartment:
+// container, so the stepper makes half a revolution to advance one compartment:
 //
-//     STEPS_PER_SLOT = 4096 * (gear_ratio / compartments)
-//                    = 4096 * (7.5 / 15) = 2048 half-steps  (= 1/2 revolution)
+//     STEPS_PER_SLOT = HALFSTEPS_PER_REV * (gear_ratio / compartments)
+//                    = 4075.77 * (7.5 / 15) = 2037.9 half-steps  (~1/2 rev)
 //
 // To recalibrate for a different build, change ONLY this value:
-//   * direct drive (no gear), N slots  -> 4096 / N      (4 slots=1024, 8=512)
-//   * with a g:1 gear,        N slots  -> 4096 * g / N
-#define HALFSTEPS_PER_REV 4096
-#define STEPS_PER_SLOT    2048   // half-steps to advance EXACTLY one compartment
+//   * direct drive (no gear), N slots  -> HALFSTEPS_PER_REV / N
+//   * with a g:1 gear,        N slots  -> HALFSTEPS_PER_REV * g / N
+#define HALFSTEPS_PER_REV 4075.7728f         // 28BYJ-48 true (63.68395:1 gearbox)
+#define STEPS_PER_SLOT    (HALFSTEPS_PER_REV * 0.5f)  // ~2037.9 half-steps/slot
 #define STEP_DELAY_MS        2   // 2 ms/half-step -> ~4.1 s per slot (half a rev)
+
+// The dispenser's gears are not properly mounted, so a big fraction of each move
+// is lost to slippage/friction and the disc stops well short. Command this
+// FRACTION of a slot EXTRA on top of the normal slot rotation so it actually
+// lands on target. 0.25 = "normal + a quarter". This physical fudge is added
+// AFTER the remainder accumulator, so it never corrupts the geometric count.
+// Tune up if it still falls short, down if it overshoots.
+#define FRICTION_COMP_FRACTION  0.12f  // normal slot rotation + 12%
 
 // ── EEPROM (simulated in ESP8266 flash) ───────────────────
 #define EEPROM_SIZE     60

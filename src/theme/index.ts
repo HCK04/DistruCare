@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// DisrtuCare — Système de thème (palette clinique claire)
+// Distrucare — Système de thème (palette clinique claire)
 // Palette pensée comme une vraie application médicale : fond clair,
 // une seule couleur primaire calme, statuts sobres, ombres discrètes.
 // ─────────────────────────────────────────────────────────────

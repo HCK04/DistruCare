@@ -2,13 +2,43 @@ import { getDatabase } from './database';
 
 export interface Schedule {
   id: number;
-  medication_name: string;
+  medication_name: string;       // combined label (for the device LCD / legacy)
+  am_medication_name: string;
+  pm_medication_name: string;
   am_time: string;
   pm_time: string;
   notifications_enabled: number;
   is_setup: number;
   device_ip: string;
   large_text: number;
+}
+
+// Per-dose medicine lists are stored as a JSON array string in
+// am_medication_name / pm_medication_name. These helpers serialise to / from a
+// plain string[]. parse is tolerant of the legacy single-name (non-JSON) value.
+export function parseMedList(raw: string): string[] {
+  const s = (raw ?? '').trim();
+  if (!s) return [];
+  if (s.startsWith('[')) {
+    try {
+      const arr = JSON.parse(s);
+      if (Array.isArray(arr)) {
+        return arr.filter((x) => typeof x === 'string' && x.trim()).map((x) => x.trim());
+      }
+    } catch { /* fall through to single-name */ }
+  }
+  return [s];
+}
+
+export function serializeMedList(list: string[]): string {
+  return JSON.stringify(list.map((x) => x.trim()).filter(Boolean));
+}
+
+// Single combined label across both dose lists (for the device LCD and any
+// place that shows one name). De-duplicates and joins with " / ".
+export function combinedMedLabel(amList: string[], pmList: string[]): string {
+  const all = [...amList, ...pmList].map((s) => s.trim()).filter(Boolean);
+  return Array.from(new Set(all)).join(' / ');
 }
 
 export interface DoseLog {
@@ -38,7 +68,8 @@ export async function getSchedule(): Promise<Schedule> {
 }
 
 export async function updateSchedule(
-  medicationName: string,
+  amMedList: string[],
+  pmMedList: string[],
   amTime: string,
   pmTime: string,
   notificationsEnabled: boolean
@@ -46,9 +77,17 @@ export async function updateSchedule(
   const db = await getDatabase();
   await db.runAsync(
     `UPDATE schedule
-     SET medication_name = ?, am_time = ?, pm_time = ?, notifications_enabled = ?
+     SET medication_name = ?, am_medication_name = ?, pm_medication_name = ?,
+         am_time = ?, pm_time = ?, notifications_enabled = ?
      WHERE id = 1`,
-    [medicationName, amTime, pmTime, notificationsEnabled ? 1 : 0]
+    [
+      combinedMedLabel(amMedList, pmMedList),
+      serializeMedList(amMedList),
+      serializeMedList(pmMedList),
+      amTime,
+      pmTime,
+      notificationsEnabled ? 1 : 0,
+    ]
   );
 }
 

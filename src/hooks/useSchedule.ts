@@ -18,12 +18,13 @@ export function useSchedule() {
 
   const save = useCallback(
     async (
-      medicationName: string,
+      amMedList: string[],
+      pmMedList: string[],
       amTime: string,
       pmTime: string,
       notificationsEnabled: boolean
     ) => {
-      await updateSchedule(medicationName, amTime, pmTime, notificationsEnabled);
+      await updateSchedule(amMedList, pmMedList, amTime, pmTime, notificationsEnabled);
       await load();
     },
     [load]

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "DisrtuCare",
-    "slug": "DisrtuCare",
+    "name": "Distrucare",
+    "slug": "Distrucare",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,7 +16,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.distruccare.app",
       "infoPlist": {
-        "NSUserNotificationsUsageDescription": "DisrtuCare sends you reminders to take your medication on time."
+        "NSUserNotificationsUsageDescription": "Distrucare sends you reminders to take your medication on time."
       }
     },
     "android": {
