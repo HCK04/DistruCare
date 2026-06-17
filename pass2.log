@@ -1,0 +1,382 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+(chapitre3_disrtucare.tex
+LaTeX2e <2025-11-01>
+L3 programming layer <2026-03-20>
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/base\report.cls
+Document Class: report 2025/01/22 v1.4n Standard LaTeX document class
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/base\size11.clo))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbabel.def)
+*************************************
+* Local config file bblopts.cfg used
+*
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/arabi\bblopts.cfg)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/babel/locale/fr\babel
+-french.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/babel-french\french.l
+df
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/babel-french\french3.
+ldf)))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/carlisle\scalefnt.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/lm\lmodern.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
+
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype-pdf
+tex.def)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype.cfg
+))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/setspace\setspace.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg)
+
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
+)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx)
+) (C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/titlesec\titlesec.sty
+) (C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tools\tabularx.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/colortbl\colortbl.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/enumitem\enumitem.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\pifont.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\upzd.fd)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\upsy.fd))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcolorbox.sty
+
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/pgf/frontendlayer\tikz.
+sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgf.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfrcs.st
+y
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil
+-common.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil
+-latex.def)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfrcs.
+code.tex
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf\pgf.revision.tex)
+))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgfcore.
+sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.c
+fg)))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/pgf/systemlayer\pgfsys.
+sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+s.code.tex
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
+.code.tex
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
+libraryfiltered.code.tex))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgf.c
+fg)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+s-pdftex.def
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+s-common-pdf.def)))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+ssoftpath.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+sprotocol.code.tex))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+e.code.tex
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmath.code
+.tex
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathutil.
+code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathparse
+r.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.basic.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.trigonometric.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.random.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.comparison.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.base.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.round.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.misc.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.integerarithmetics.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathcalc.
+code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfloat
+.code.tex))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfint.code.
+tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epoints.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epathconstruct.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epathusage.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+escopes.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+egraphicstate.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+etransformations.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+equick.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eobjects.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epathprocessing.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+earrows.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eshade.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eimage.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eexternal.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+elayers.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+etransparency.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epatterns.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+erdf.code.tex)))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
+shapes.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
+plot.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfco
+mp-version-0-65.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfco
+mp-version-1-18.sty))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgffor.st
+y
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfkeys.s
+ty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
+.code.tex))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/pgf/math\pgfmath.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmath.code
+.tex))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgffor.
+code.tex))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z\tikz.code.tex
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibr
+aryplothandlers.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
+matrix.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibrarytopaths.code.tex)))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tools\verbatim.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/environ\environ.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/trimspaces\trimspaces.s
+ty))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbraster.cod
+e.tex
+Library (tcolorbox): 'tcbraster.code.tex' version '6.9.0'
+)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbskins.code
+.tex
+Library (tcolorbox): 'tcbskins.code.tex' version '6.9.0'
+
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tikzfill\tikzfill.image
+.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tikzfill\tikzlibraryfil
+l.image.code.tex))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbskinsjigsa
+w.code.tex
+Library (tcolorbox): 'tcbskinsjigsaw.code.tex' version '6.9.0'
+))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbbreakable.
+code.tex
+Library (tcolorbox): 'tcbbreakable.code.tex' version '6.9.0'
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/pdfcol\pdfcol.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.s
+ty)))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbhooks.code
+.tex
+Library (tcolorbox): 'tcbhooks.code.tex' version '6.9.0'
+)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbtheorems.c
+ode.tex
+Library (tcolorbox): 'tcbtheorems.code.tex' version '6.9.0'
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+For additional information on amsmath, use the `?' option.
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty)))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbfitting.co
+de.tex
+Library (tcolorbox): 'tcbfitting.code.tex' version '6.9.0'
+)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcblistingsut
+f8.code.tex
+Library (tcolorbox): 'tcblistingsutf8.code.tex' version '6.9.0'
+
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcblistings.c
+ode.tex
+Library (tcolorbox): 'tcblistings.code.tex' version '6.9.0'
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstpatch.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg))
+==> First Aid for listings.sty no longer applied!
+    Expected:
+        2024/09/23 1.10c (Carsten Heinz)
+    but found:
+        2025/11/14 1.11b (Carsten Heinz)
+    so I'm assuming it got fixed.
+
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcblistingsco
+re.code.tex
+Library (tcolorbox): 'tcblistingscore.code.tex' version '6.9.0'
+
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbprocessing
+.code.tex
+Library (tcolorbox): 'tcbprocessing.code.tex' version '6.9.0'
+)))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/listingsutf8\listingsut
+f8.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds
+.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\stringenc.s
+ty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.s
+ty))))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbexternal.c
+ode.tex
+Library (tcolorbox): 'tcbexternal.code.tex' version '6.9.0'
+)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbmagazine.c
+ode.tex
+Library (tcolorbox): 'tcbmagazine.code.tex' version '6.9.0'
+)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbvignette.c
+ode.tex
+Library (tcolorbox): 'tcbvignette.code.tex' version '6.9.0'
+
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibraryfadings.code.tex
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibr
+aryfadings.code.tex)))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbposter.cod
+e.tex
+Library (tcolorbox): 'tcbposter.code.tex' version '6.9.0'
+))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibraryshapes.geometric.code.tex
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries/shapes\
+pgflibraryshapes.geometric.code.tex))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibr
+aryarrows.meta.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibrarypositioning.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibrarycalc.code.tex)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefine
+keys.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettit
+lestring.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+))) (C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
+) (C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
+) (C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc
+.sty)))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfil
+echeck.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquec
+ounter.sty)))
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fancyhdr.sty)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
+tex.def) (chapitre3_disrtucare.aux)
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-cmr.cfg)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
+ii
+[Loading MPS to PDF converter (version 2006.09.02).]
+)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
+ase.sty
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.c
+fg)) (chapitre3_disrtucare.out) (chapitre3_disrtucare.out)
+Chapitre 3.
+
+Overfull \hbox (17.0pt too wide) in paragraph at lines 108--110
+[][][]
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd)
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd)
+Overfull \hbox (17.0pt too wide) in paragraph at lines 148--149
+[][] 
+[1{C:/Users/megan/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/me
+gan/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}]
+(C:\Users\megan\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd) [2{C:/Use
+rs/megan/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Use
+rs/megan/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}]
+Overfull \hbox (17.0pt too wide) in paragraph at lines 237--238
+[][] 
+[3]
+Overfull \hbox (17.0pt too wide) in paragraph at lines 253--254
+[][] 
+[4] [5]
+Overfull \hbox (17.0pt too wide) in paragraph at lines 361--362
+[][] 
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 363.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\rightarrow' on input line 363.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 363.
+
+[6]
+Overfull \hbox (17.0pt too wide) in paragraph at lines 464--465
+[][] 
+[7] [8] [9] (chapitre3_disrtucare.aux) )
+(see the transcript file for additional information)<C:/Users/megan/AppData/Loc
+al/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/megan/AppData/Loc
+al/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/megan/AppData/Loc
+al/Programs/MiKTeX/fonts/type1/public/lm/lmbx9.pfb><C:/Users/megan/AppData/Loca
+l/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/megan/AppData/Local
+/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/megan/AppData/Local
+/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/megan/AppData/Local
+/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb><C:/Users/megan/AppData/Local
+/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb>
+Output written on chapitre3_disrtucare.pdf (9 pages, 262260 bytes).
+Transcript written on chapitre3_disrtucare.log.

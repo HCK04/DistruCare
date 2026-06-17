@@ -1,0 +1,494 @@
+\documentclass[11pt,a4paper]{report}
+
+% ─── Encodage & langue ───────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+
+% ─── Mise en page ────────────────────────────────────────────
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{microtype}
+\usepackage{setspace}
+\onehalfspacing
+
+% ─── Couleurs ────────────────────────────────────────────────
+\usepackage{xcolor}
+\definecolor{navy}{HTML}{0F172A}
+\definecolor{teal}{HTML}{14B8A6}
+\definecolor{tealdark}{HTML}{0E7C72}
+\definecolor{lightgray}{HTML}{F1F5F9}
+\definecolor{midgray}{HTML}{64748B}
+\definecolor{taken}{HTML}{16A34A}
+\definecolor{late}{HTML}{CA8A04}
+\definecolor{missed}{HTML}{DC2626}
+\definecolor{codebg}{HTML}{F8FAFC}
+
+% ─── Titres ──────────────────────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\bfseries\color{navy}}
+  {\Large\color{teal}\MakeUppercase{\chaptertitlename} \thechapter}
+  {0.4em}
+  {\Huge}
+\titlespacing*{\chapter}{0pt}{0pt}{1.4ex}
+\titleformat{\section}{\Large\bfseries\color{navy}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{tealdark}}{\thesubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{2.2ex plus 1ex minus .2ex}{1ex}
+
+% ─── Tableaux ────────────────────────────────────────────────
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}
+\renewcommand{\arraystretch}{1.35}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% ─── Listes ──────────────────────────────────────────────────
+\usepackage{enumitem}
+\setlist{leftmargin=1.4em,topsep=2pt,itemsep=1pt}
+\usepackage{pifont}
+
+% ─── Boîtes / encadrés ───────────────────────────────────────
+\usepackage[most]{tcolorbox}
+\newtcolorbox{infobox}[1][]{colback=lightgray,colframe=teal,boxrule=1pt,
+  arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,#1}
+\newtcolorbox{warnbox}[1][]{colback=missed!6,colframe=missed,boxrule=1pt,
+  arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,#1}
+\newtcolorbox{stepbox}[1][]{colback=teal!6,colframe=tealdark,boxrule=1pt,
+  arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,#1}
+
+% ─── Code ────────────────────────────────────────────────────
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{codebg},
+  frame=single,rulecolor=\color{midgray!40},
+  breaklines=true,columns=fullflexible,
+  xleftmargin=4pt,xrightmargin=4pt,
+  aboveskip=8pt,belowskip=8pt,
+}
+
+% ─── Organigramme (TikZ) ─────────────────────────────────────
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc}
+\tikzset{
+  startstop/.style={rectangle, rounded corners=10pt, draw=tealdark, very thick,
+    fill=teal!18, text width=8.4cm, align=center, minimum height=1cm,
+    font=\small\bfseries},
+  process/.style={rectangle, draw=navy, thick, fill=lightgray,
+    text width=8.4cm, align=center, minimum height=0.95cm, font=\small},
+  decision/.style={diamond, aspect=2.4, draw=late, very thick, fill=late!12,
+    text width=4.6cm, align=center, inner sep=1pt, font=\small\bfseries},
+  io/.style={trapezium, trapezium left angle=70, trapezium right angle=110,
+    draw=tealdark, thick, fill=teal!8, text width=7.6cm, align=center,
+    minimum height=0.9cm, font=\small},
+  flowline/.style={-{Stealth[length=2.6mm]}, thick, draw=midgray},
+}
+
+% ─── Liens ───────────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=tealdark,urlcolor=tealdark,
+  pdftitle={DisrtuCare - Chapitre 3},pdfauthor={Projet DisrtuCare}}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\color{midgray}DisrtuCare}
+\fancyhead[R]{\small\color{midgray}Chapitre 3 --- Fonctionnement \& d\'eveloppement logiciel}
+\fancyfoot[C]{\small\color{midgray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ═════════════════════════════════════════════════════════════
+\begin{document}
+
+\setcounter{chapter}{2}
+\chapter{Fonctionnement du syst\`eme et d\'eveloppement logiciel}
+
+\vspace{-1ex}
+{\color{teal}\rule{\linewidth}{1.5pt}}
+\vspace{1ex}
+
+Ce chapitre d\'ecrit comment le syst\`eme \textbf{DisrtuCare} fonctionne r\'eellement,
+une fois assembl\'e. Apr\`es avoir pr\'esent\'e les composants mat\'eriels au chapitre
+pr\'ec\'edent, nous expliquons ici \textbf{ce qui se passe quand le syst\`eme est en
+marche}~: comment le distributeur d\'elivre une pilule \`a l'heure pr\'evue, comment
+l'application mobile a \'et\'e con\c cue, comment les deux communiquent, et enfin comment
+toute la cha\^ine se d\'eroule \og du r\'eglage de l'heure par l'utilisateur jusqu'\`a la
+pilule dans le plateau \fg. Le propos reste volontairement \textbf{accessible}~: les
+notions informatiques sont expliqu\'ees par analogie plut\^ot que par le d\'etail du code.
+
+\begin{infobox}
+\textbf{Vue en une phrase.} DisrtuCare associe un \textbf{distributeur autonome} (un petit
+ordinateur \og NodeMCU \fg\ qui pilote un moteur, une horloge et une LED) \`a une
+\textbf{application mobile compagnon} qui sert de tableau de bord, de carnet de suivi et de
+t\'el\'ecommande. Les deux dialoguent par \textbf{WiFi}, sur le r\'eseau domestique du patient.
+\end{infobox}
+
+% ═════════════════════════════════════════════════════════════
+\section{Fonctionnement du syst\`eme mat\'eriel}
+
+\subsection{Le principe g\'en\'eral}
+
+Le c\oe ur du distributeur est un \textbf{NodeMCU V3}, un microcontr\^oleur de la famille
+ESP8266. C'est l'\'equivalent d'un tr\`es petit ordinateur~: il ex\'ecute en boucle un
+programme (le \emph{firmware}) et int\`egre nativement le \textbf{WiFi}, ce qui lui permet
+de communiquer avec le t\'el\'ephone sans c\^able ni module suppl\'ementaire. Autour de lui
+s'articulent quatre organes~:
+
+\begin{tabularx}{\linewidth}{L{3.6cm} X}
+\toprule
+\rowcolor{lightgray}\textbf{Organe} & \textbf{R\^ole physiologique du syst\`eme} \\
+\midrule
+Moteur pas \`a pas \textbf{28BYJ-48} (via le pilote \textbf{ULN2003}) & Le \og muscle \fg~: il fait tourner le carrousel de pilules d'un compartiment, lib\'erant la dose. \\
+Horloge temps r\'eel \textbf{DS3231} & La \og montre \fg~: elle garde l'heure exacte, m\^eme apr\`es une coupure de courant, gr\^ace \`a une pile bouton. \\
+\textbf{LED} bleue & Le \og signal d'alerte \fg~: elle clignote pour signaler qu'une dose vient d'\^etre d\'elivr\'ee et attend confirmation. \\
+\textbf{Bouton} poussoir & Le \og retour patient \fg~: en appuyant, l'utilisateur confirme qu'il a bien pris sa pilule. \\
+\'Ecran \textbf{LCD} 16$\times$2 & L'\og afficheur \fg~: il montre l'heure, l'horaire et l'adresse de connexion au d\'emarrage. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Le moteur~: comment une pilule est lib\'er\'ee}
+
+La distribution repose enti\`erement sur la \textbf{rotation pr\'ecise} du moteur. Le
+28BYJ-48 est un \emph{moteur pas \`a pas}~: au lieu de tourner librement, il avance par
+petits \og pas \fg\ commandables un par un, ce qui permet de ma\^itriser exactement de
+combien il tourne. Dans DisrtuCare~:
+
+\begin{itemize}
+  \item Un tour complet du moteur correspond \`a \textbf{4096 demi-pas}.
+  \item Le carrousel poss\`ede \textbf{4 compartiments}~; un compartiment correspond donc
+        \`a $4096 \div 4 = \mathbf{1024}$ \textbf{demi-pas}.
+  \item Chaque demi-pas dure 2 millisecondes, soit \textbf{environ 2 secondes} de rotation
+        pour amener le compartiment suivant au-dessus de l'ouverture.
+  \item D\`es la rotation termin\'ee, le programme \textbf{coupe l'alimentation des
+        bobines} du moteur, pour \'eviter qu'il chauffe inutilement \`a l'arr\^et.
+\end{itemize}
+
+\begin{infobox}
+\textbf{Pourquoi un moteur \og pas \`a pas \fg ?} Parce qu'on a besoin d'une pr\'ecision
+m\'edicale~: il faut d\'elivrer \emph{exactement une} dose, ni plus ni moins. Compter les
+pas garantit que le carrousel s'arr\^ete pile sur le compartiment suivant.
+\end{infobox}
+
+\subsection{L'horloge~: savoir quand distribuer}
+
+Pour distribuer \og \`a 8h00 \fg, le syst\`eme doit conna\^itre l'heure. C'est le r\^ole
+du module \textbf{DS3231}, une horloge aliment\'ee par une petite pile qui continue de
+compter le temps m\^eme appareil \'eteint. Le firmware a \'et\'e con\c cu avec une
+\textbf{s\'ecurit\'e intelligente}~: si l'horloge mat\'erielle n'est pas pr\'esente, il
+bascule sur une \textbf{horloge logicielle de secours}, mise \`a l'heure par le t\'el\'ephone
+lors de la connexion. Le syst\`eme reste donc fonctionnel m\^eme sans le module DS3231.
+
+\begin{infobox}
+Tant que l'heure n'est pas connue de fa\c con fiable, le programme \textbf{interdit toute
+distribution} (fonction \texttt{rtcIsRunning}). Cela \'evite qu'une dose parte par erreur
+\`a minuit, heure par d\'efaut d'un appareil non r\'egl\'e.
+\end{infobox}
+
+\subsection{La boucle de fonctionnement permanente}
+
+Une fois allum\'e, le distributeur ex\'ecute sans arr\^et une \textbf{boucle} qui
+encha\^ine quatre v\'erifications, plusieurs fois par seconde et \textbf{sans jamais se
+bloquer}~:
+
+\begin{enumerate}
+  \item \textbf{R\'epondre au t\'el\'ephone}~: traiter les \'eventuelles demandes de l'application.
+  \item \textbf{V\'erifier l'horaire}~: l'heure actuelle correspond-elle \`a la dose du matin ou du soir~?
+  \item \textbf{Surveiller le bouton}~: l'utilisateur vient-il de confirmer une prise~?
+  \item \textbf{Animer la LED}~: la faire clignoter tant qu'une confirmation est attendue.
+\end{enumerate}
+
+\noindent C'est ce fonctionnement \textbf{autonome} qui fait la robustesse du dispositif~:
+m\^eme si le t\'el\'ephone est \'eteint ou hors r\'eseau, le distributeur conna\^it l'heure,
+d\'elivre les doses programm\'ees et attend la confirmation du patient.
+
+\subsection{La m\'emoire permanente (EEPROM)}
+
+L'horaire (heure du matin, heure du soir) et le nom du m\'edicament sont \'ecrits dans une
+\textbf{m\'emoire non volatile} appel\'ee EEPROM. Concr\`etement, ces r\'eglages
+\textbf{survivent \`a une coupure de courant}~: apr\`es un red\'emarrage, le distributeur
+retrouve son horaire sans avoir besoin du t\'el\'ephone. Un \og octet t\'emoin \fg\ permet
+au programme de savoir si la m\'emoire a d\'ej\`a \'et\'e initialis\'ee.
+
+% ═════════════════════════════════════════════════════════════
+\section{D\'eveloppement logiciel}
+
+Le logiciel de DisrtuCare se compose de \textbf{deux programmes distincts} qui coop\`erent~:
+le \textbf{firmware embarqu\'e} (d\'ecrit ci-dessus, \'ecrit en langage Arduino~/~C++) et
+l'\textbf{application mobile}. Cette section d\'etaille la conception de l'application.
+
+\subsection{La technologie choisie et pourquoi}
+
+L'application a \'et\'e d\'evelopp\'ee avec \textbf{Expo / React Native}, une technologie
+qui permet d'\'ecrire \textbf{une seule fois} le code et de le faire fonctionner aussi bien
+sur \textbf{Android} que sur \textbf{iOS}. Le langage utilis\'e est le \textbf{TypeScript}.
+Ce choix \'evite de d\'evelopper deux applications s\'epar\'ees et acc\'el\`ere donc
+nettement la r\'ealisation.
+
+\begin{tabularx}{\linewidth}{L{4.2cm} X}
+\toprule
+\rowcolor{lightgray}\textbf{Brique logicielle} & \textbf{\`A quoi elle sert} \\
+\midrule
+\textbf{Expo / React Native} & Construire l'interface et la faire tourner sur t\'el\'ephone. \\
+\textbf{expo-sqlite} & Une base de donn\'ees locale, dans le t\'el\'ephone~: l'app fonctionne \textbf{hors-ligne}, sans serveur ni internet. \\
+\textbf{expo-notifications} & Programmer des \textbf{rappels} (notifications) aux heures de prise. \\
+\textbf{react-native-reanimated} & Rendre les animations fluides et agr\'eables. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{L'organisation de l'application en \'ecrans}
+
+L'interface est organis\'ee en \textbf{quatre onglets}, pens\'es pour une utilisation simple,
+notamment par des \textbf{personnes \^ag\'ees}~:
+
+\begin{tabularx}{\linewidth}{L{2.8cm} X}
+\toprule
+\rowcolor{lightgray}\textbf{\'Ecran} & \textbf{Fonction} \\
+\midrule
+\textbf{Tableau de bord} & Affiche la \textbf{prochaine dose} (avec compte \`a rebours), un \textbf{anneau d'observance} sur 30 jours, et les doses du jour (matin~/~soir) avec leur statut. \\
+\textbf{Historique} & Journal jour par jour des prises, avec un code couleur. \\
+\textbf{Appareil} & Permet de \textbf{se connecter au distributeur} (saisie de son adresse), et offre des boutons de test (moteur, LED, synchronisation). \\
+\textbf{R\'eglages} & D\'efinit les \textbf{heures} matin et soir, le \textbf{nom du m\'edicament}, et active~/~d\'esactive les notifications. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{La base de donn\'ees locale}
+
+Toutes les informations sont conserv\'ees \textbf{dans le t\'el\'ephone}, dans une petite
+base de donn\'ees SQLite. Elle comporte deux tables~:
+
+\begin{itemize}
+  \item \textbf{\texttt{schedule}} (les r\'eglages)~: une seule ligne contenant le nom du
+        m\'edicament, les heures du matin et du soir, l'\'etat des notifications et
+        l'adresse du distributeur.
+  \item \textbf{\texttt{dose\_logs}} (le carnet de prises)~: une entr\'ee par dose, avec la
+        date, le type (matin~/~soir) et le statut~:
+        {\color{taken}\textbf{prise}} / {\color{late}\textbf{en retard}} /
+        {\color{missed}\textbf{manqu\'ee}}. Une r\`egle garantit \textbf{une seule entr\'ee
+        matin et une seule entr\'ee soir par jour}.
+\end{itemize}
+
+\subsection{Les rappels (notifications)}
+
+\`A chaque enregistrement de l'horaire, l'application \textbf{reprogramme automatiquement
+quatre rappels quotidiens}~: un rappel le matin, un le soir, et deux \textbf{relances 30
+minutes plus tard} si la prise n'a pas \'et\'e confirm\'ee. Ces rappels sont \textbf{locaux}~:
+ils s'affichent sur le t\'el\'ephone m\^eme sans connexion internet.
+
+\subsection{L'accessibilit\'e~: une exigence de conception}
+
+Le public cible \'etant les \textbf{patients \^ag\'es}, l'interface a \'et\'e con\c cue avec~:
+grandes polices (18 \`a 22 px), \textbf{fort contraste} (fond bleu marine, accent turquoise),
+\textbf{grandes zones tactiles} (au moins 56 px) et un \textbf{code couleur intuitif}
+(vert~/~jaune~/~rouge) pour le statut de chaque dose.
+
+% ═════════════════════════════════════════════════════════════
+\section{Organigramme (logigramme) du fonctionnement}
+
+L'organigramme ci-dessous r\'esume le \textbf{cycle complet d'une dose}, depuis la
+v\'erification de l'heure par le distributeur jusqu'\`a l'enregistrement de la prise dans
+l'application. Les losanges repr\'esentent des \textbf{d\'ecisions}~; les rectangles, des
+\textbf{actions}.
+
+\vspace{1ex}
+\begin{center}
+\begin{tikzpicture}[node distance=8mm and 0mm]
+
+\node (start)  [startstop] {D\'emarrage du distributeur \\ (lecture de l'heure et de l'horaire en m\'emoire)};
+\node (clock)  [decision, below=of start] {L'heure $=$ heure d'une dose~?};
+\node (wait)   [process, right=14mm of clock, text width=3.2cm] {Attendre \\ (boucle)};
+\node (motor)  [process, below=14mm of clock] {Le moteur tourne d'un compartiment \\ $\rightarrow$ la pilule tombe dans le plateau};
+\node (led)    [process, below=of motor] {La LED clignote~; un \'ev\'enement \\ \og dose d\'elivr\'ee \fg\ est enregistr\'e};
+\node (app)    [io, below=of led] {L'application (qui interroge le distributeur \\ toutes les 3 s) affiche l'\'ev\'enement};
+\node (btn)    [decision, below=of app] {Le patient appuie \\ sur le bouton~?};
+\node (notif)  [process, right=10mm of btn, text width=3.6cm] {Rappel renvoy\'e \\ apr\`es 30 min};
+\node (conf)   [process, below=16mm of btn] {LED \'eteinte~; \'ev\'enement \\ \og prise confirm\'ee \fg};
+\node (log)    [process, below=of conf] {L'app enregistre la dose comme \\ \textbf{\og prise \fg} et met \`a jour l'observance};
+\node (end)    [startstop, below=of log] {Dose termin\'ee \\ (remise \`a z\'ero le lendemain \`a minuit)};
+
+\draw [flowline] (start) -- (clock);
+\draw [flowline] (clock) -- node[above, font=\footnotesize\bfseries, text=missed] {non} (wait);
+\draw [flowline] (wait.north) |- ([yshift=3mm]start.south east) -| (clock.north east);
+\draw [flowline] (clock) -- node[right, font=\footnotesize\bfseries, text=taken] {oui} (motor);
+\draw [flowline] (motor) -- (led);
+\draw [flowline] (led)   -- (app);
+\draw [flowline] (app)   -- (btn);
+\draw [flowline] (btn) -- node[above, font=\footnotesize\bfseries, text=missed] {non} (notif);
+\draw [flowline] (notif.south) |- (app.east);
+\draw [flowline] (btn) -- node[right, font=\footnotesize\bfseries, text=taken] {oui} (conf);
+\draw [flowline] (conf) -- (log);
+\draw [flowline] (log)  -- (end);
+
+\end{tikzpicture}
+\end{center}
+
+\begin{infobox}
+\textbf{Lecture de l'organigramme.} Tant que l'heure ne correspond pas, le distributeur
+\og tourne en rond \fg\ (boucle d'attente). Au moment voulu, il agit~: il distribue,
+signale, et attend la confirmation du patient. Si le patient n'appuie pas, l'application le
+relance~; quand il appuie, la prise est enregistr\'ee automatiquement.
+\end{infobox}
+
+% ═════════════════════════════════════════════════════════════
+\section{Int\'egration mat\'eriel--logiciel}
+
+C'est le point cl\'e du projet~: faire \textbf{dialoguer} le distributeur et le t\'el\'ephone.
+
+\subsection{Le moyen de communication~: le WiFi}
+
+Le distributeur et le t\'el\'ephone sont connect\'es au \textbf{m\^eme r\'eseau WiFi
+domestique}. Le NodeMCU se comporte alors comme un \textbf{petit serveur web}~: il poss\`ede
+une \textbf{adresse} (par exemple \texttt{192.168.11.109}) que l'utilisateur saisit dans
+l'onglet \textbf{Appareil} de l'application. Cette adresse s'affiche sur l'\'ecran LCD au
+d\'emarrage, puis elle est \textbf{m\'emoris\'ee} par l'application pour les fois suivantes.
+
+\subsection{Le langage commun~: des messages HTTP/JSON}
+
+Les deux appareils \'echangent de courts messages au format \textbf{JSON} (un format texte
+simple et lisible) via le protocole \textbf{HTTP}, le m\^eme que celui des sites web. Cinq
+\og adresses \fg\ (endpoints) sont d\'efinies sur le distributeur~:
+
+\begin{tabularx}{\linewidth}{L{2.5cm} X}
+\toprule
+\rowcolor{lightgray}\textbf{Message} & \textbf{Signification} \\
+\midrule
+\texttt{/status}  & \og Donne-moi ton \'etat \fg\ (heure, horaire, dernier \'ev\'enement). \\
+\texttt{/sync}    & \og Voici le nouvel horaire \fg\ (matin, soir, m\'edicament). \\
+\texttt{/settime} & \og Voici l'heure exacte \fg\ (pour r\'egler l'horloge). \\
+\texttt{/led}     & \og Allume ou \'eteins la LED \fg. \\
+\texttt{/motor}   & \og Fais tourner le moteur \fg\ (bouton de test). \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Le sens distributeur $\rightarrow$ application~: le \og sondage \fg}
+
+Un microcontr\^oleur ne peut pas facilement \og appeler \fg\ le t\'el\'ephone de
+lui-m\^eme. La solution retenue est simple et robuste~: c'est l'application qui
+\textbf{interroge le distributeur toutes les 3 secondes} (m\'ecanisme dit de \emph{polling}).
+Chaque r\'eponse contient un \textbf{num\'ero d'\'ev\'enement}. Quand ce num\'ero change,
+l'application comprend qu'un \'ev\'enement vient de se produire (une dose d\'elivr\'ee, une
+prise confirm\'ee) et r\'eagit en cons\'equence.
+
+\begin{infobox}
+\textbf{Une analogie.} Plut\^ot que le distributeur \og t\'el\'ephone \fg\ \`a l'app,
+c'est l'app qui demande r\'eguli\`erement~: \og Du nouveau~? \fg. Tant que le num\'ero
+d'\'ev\'enement est le m\^eme, rien n'a chang\'e~; d\`es qu'il augmente, l'app sait qu'un
+fait nouveau s'est produit.
+\end{infobox}
+
+\subsection{Le pipeline complet~: du r\'eglage \`a la prise}
+
+Voici le sc\'enario de bout en bout, qui relie tout ce qui pr\'ec\`ede~:
+
+\begin{stepbox}
+\textbf{1. R\'eglage (utilisateur).} Dans l'\'ecran R\'eglages, l'utilisateur d\'efinit
+08:00 / 20:00. L'application~: \emph{(a)} enregistre l'horaire dans sa base locale~;
+\emph{(b)} l'envoie au distributeur via \texttt{/sync} (qui le sauve en EEPROM et l'affiche
+sur le LCD)~; \emph{(c)} programme les notifications de rappel.
+\end{stepbox}
+
+\begin{stepbox}
+\textbf{2. Distribution (mat\'eriel).} \`A 08:00, le distributeur d\'etecte que l'heure
+correspond \`a la dose du matin. Le moteur tourne d'un compartiment, la pilule tombe dans le
+plateau, la LED se met \`a clignoter, et un \'ev\'enement \og dose d\'elivr\'ee \fg\ est
+enregistr\'e.
+\end{stepbox}
+
+\begin{stepbox}
+\textbf{3. Notification (logiciel).} Au m\^eme moment, le t\'el\'ephone affiche son rappel
+local \og C'est l'heure de votre dose du matin \fg. En interrogeant le distributeur,
+l'application voit le nouvel \'ev\'enement et l'affiche dans son journal.
+\end{stepbox}
+
+\begin{stepbox}
+\textbf{4. Confirmation (utilisateur + mat\'eriel).} Le patient prend sa pilule et
+\textbf{appuie sur le bouton} du distributeur. La LED s'\'eteint, et un \'ev\'enement \og
+prise confirm\'ee \fg\ est enregistr\'e.
+\end{stepbox}
+
+\begin{stepbox}
+\textbf{5. Tra\c cabilit\'e (logiciel).} L'application capte la confirmation et
+\textbf{enregistre automatiquement la dose comme \og prise \fg} dans le carnet, sans aucune
+action manuelle. L'\textbf{anneau d'observance} (30 jours) se recalcule.
+\end{stepbox}
+
+\begin{infobox}
+\textbf{Le point fort de l'int\'egration}~: un simple \textbf{geste physique} sur le
+distributeur (appuyer sur le bouton) \textbf{met \`a jour le dossier num\'erique} du patient.
+Le patient n'a rien \`a saisir~; le suivi d'observance se construit tout seul.
+\end{infobox}
+
+% ═════════════════════════════════════════════════════════════
+\section{Difficult\'es rencontr\'ees et solutions apport\'ees}
+
+La r\'ealisation a soulev\'e plusieurs difficult\'es concr\`etes, mat\'erielles comme
+logicielles. Les principales sont r\'esum\'ees ci-dessous.
+
+\begin{tabularx}{\linewidth}{L{5.1cm} X}
+\toprule
+\rowcolor{lightgray}\textbf{Difficult\'e} & \textbf{Solution apport\'ee} \\
+\midrule
+\textbf{Le moteur ne tournait pas} malgr\'e un c\^ablage en apparence correct. &
+Les fils de commande \'etaient branch\'es sur les broches D1--D4 alors que le programme
+pilotait D5--D8. Le \textbf{d\'eplacement des fils sur D5--D8} a r\'esolu le probl\`eme~;
+ces broches \'evitent en plus les broches \og sensibles au d\'emarrage \fg\ de l'ESP8266. \\
+
+\textbf{Alimentation insuffisante du moteur.} Le moteur \'etait reli\'e \`a une broche
+n'ayant pas la tension n\'ecessaire. & Reraccordement sur la broche \textbf{5V (VU)} reli\'ee
+directement \`a l'USB, et installation du \textbf{cavalier d'alimentation} du pilote ULN2003. \\
+
+\textbf{Coupures du microcontr\^oleur} (\og brownout \fg) au d\'emarrage du moteur, qui
+tirait trop de courant via le port USB du PC. & D\'ebrancher l'alimentation moteur pendant
+le t\'el\'eversement~; la solution d\'efinitive est une \textbf{alimentation 5V s\'epar\'ee}
+pour le moteur, avec une masse commune. \\
+
+\textbf{Impossible de conna\^itre l'adresse du distributeur} sans \'ecran. &
+Le firmware \textbf{affiche l'adresse sur le LCD} pendant 5 secondes au d\'emarrage (et
+l'imprime aussi sur le port s\'erie pour le d\'ebogage). \\
+
+\textbf{Risque de distribution parasite} si l'heure n'est pas connue. & Le programme
+\textbf{interdit toute distribution tant que l'horloge n'est pas valide}, \'evitant un
+d\'eclenchement \`a minuit par d\'efaut. \\
+
+\textbf{Fonctionnement sans module d'horloge (DS3231).} & Mise en place d'une \textbf{horloge
+logicielle de secours}, re-synchronis\'ee par le t\'el\'ephone \`a chaque connexion. \\
+
+\textbf{Microcontr\^oleur incapable de notifier le t\'el\'ephone} directement. &
+Adoption du \textbf{sondage par num\'ero d'\'ev\'enement}~: l'app interroge le distributeur
+toutes les 3 s, sans technologie complexe (pas de WebSocket). \\
+
+\textbf{\'Evolution du cahier des charges}~: connectivit\'e d'abord interdite, puis exig\'ee. &
+Migration d'une approche \textbf{Bluetooth} vers une approche \textbf{WiFi/HTTP}, plus simple
+\`a tester et compatible avec l'environnement Expo Go (sans module natif). \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Limites connues et pistes d'am\'elioration}
+
+\begin{warnbox}
+\begin{itemize}
+  \item \textbf{Communication non chiffr\'ee et sans authentification}~: sur le r\'eseau
+        local, toute personne connect\'ee pourrait commander le moteur. Acceptable pour un
+        \textbf{prototype}, \`a s\'ecuriser pour une version finale.
+  \item \textbf{Identifiants WiFi inscrits en clair} dans le code du firmware~: \`a
+        externaliser dans un fichier de configuration prot\'eg\'e.
+  \item \textbf{M\'emoire d'\'ev\'enements limit\'ee}~: un seul \'ev\'enement est conserv\'e
+        entre deux interrogations. Si deux \'ev\'enements surviennent en moins de 3 secondes,
+        le premier peut \^etre perdu.
+\end{itemize}
+\end{warnbox}
+
+% ═════════════════════════════════════════════════════════════
+\section*{Conclusion du chapitre}
+\addcontentsline{toc}{section}{Conclusion du chapitre}
+
+Ce chapitre a montr\'e que DisrtuCare repose sur une architecture \textbf{d\'ecoupl\'ee mais
+coordonn\'ee}~: un distributeur \textbf{autonome} qui assure la fonction vitale (d\'elivrer la
+bonne dose \`a la bonne heure) et une application \textbf{compagnon} qui enrichit
+l'exp\'erience (rappels, suivi d'observance, t\'el\'ecommande). Leur int\'egration, via une
+communication WiFi simple et robuste, permet qu'un \textbf{geste physique} du patient se
+traduise automatiquement en \textbf{donn\'ee de suivi}. Les difficult\'es rencontr\'ees,
+essentiellement mat\'erielles, ont toutes trouv\'e une solution, et les limites restantes
+sont clairement identifi\'ees en vue d'une version aboutie.
+
+\end{document}

@@ -1,0 +1,19 @@
+# Légendes des maquettes — une ligne par capture : nomdefichier=Légende
+# Le "nomdefichier" est le nom du fichier sans extension
+# (ex. Historique.jpeg -> Historique). La casse n'a pas d'importance.
+# Si une capture n'est pas listée ici, le nom du fichier sert de légende.
+
+dashboardy=Votre tableau de bord, en un coup d'œil
+dashboardScrollDown=Vos doses du jour et votre observance
+Historique=Suivez votre observance jour après jour
+ConnectingToAppareil=Connexion au distributeur en WiFi
+ReglagesVisualComfortOff=Réglez votre programme en quelques touches
+VisualComfortONReglages=Confort visuel : tout le texte en plus grand
+
+# (génériques, au cas où tu renommes tes fichiers)
+dashboard=Votre tableau de bord, en un coup d'œil
+history=Suivez votre observance jour après jour
+settings=Réglez votre programme en quelques touches
+hardware=Connexion au distributeur en WiFi
+onboarding=Une prise en main simple et rassurante
+accessibility=Confort visuel : tout le texte en plus grand

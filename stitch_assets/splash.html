@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DistruCare - Welcome</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#006063",
+                    "on-tertiary-fixed": "#00201a",
+                    "on-primary-fixed-variant": "#004f52",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#00696d",
+                    "on-primary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-primary-container": "#c4fdff",
+                    "background": "#f7f9fb",
+                    "on-secondary-container": "#55676f",
+                    "tertiary-fixed": "#afefdd",
+                    "error": "#ba1a1a",
+                    "secondary": "#4f6169",
+                    "on-secondary": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "secondary-fixed": "#d2e6ef",
+                    "on-tertiary-container": "#c0ffed",
+                    "tertiary-fixed-dim": "#94d3c1",
+                    "tertiary-container": "#3b796a",
+                    "on-primary-fixed": "#002021",
+                    "secondary-fixed-dim": "#b6cad2",
+                    "primary-fixed-dim": "#7ad5d9",
+                    "surface-container-high": "#e6e8ea",
+                    "on-surface": "#191c1e",
+                    "on-background": "#191c1e",
+                    "outline": "#6e7979",
+                    "inverse-on-surface": "#eff1f3",
+                    "inverse-primary": "#7ad5d9",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-tertiary": "#ffffff",
+                    "surface-bright": "#f7f9fb",
+                    "primary-fixed": "#96f1f5",
+                    "on-secondary-fixed": "#0b1e24",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#3e4949",
+                    "surface-dim": "#d8dadc",
+                    "on-secondary-fixed-variant": "#374951",
+                    "surface": "#f7f9fb",
+                    "primary-container": "#007b7f",
+                    "secondary-container": "#d2e6ef",
+                    "on-tertiary-fixed-variant": "#065043",
+                    "inverse-surface": "#2d3133",
+                    "tertiary": "#1f6052",
+                    "outline-variant": "#bdc9c9",
+                    "surface-container": "#eceef0",
+                    "surface-container-low": "#f2f4f6",
+                    "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "sm": "12px",
+                    "gutter": "24px",
+                    "md": "24px",
+                    "margin": "32px",
+                    "base": "8px",
+                    "xl": "64px",
+                    "lg": "40px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Lexend"],
+                    "display-lg": ["Lexend"],
+                    "headline-lg": ["Lexend"],
+                    "label-lg": ["Public Sans"],
+                    "body-md": ["Public Sans"],
+                    "body-lg": ["Public Sans"],
+                    "label-md": ["Public Sans"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "display-lg": ["40px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.04em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        @keyframes softPulse {
+            0% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 0px rgba(0, 123, 127, 0)); }
+            50% { transform: scale(1.08); opacity: 0.9; filter: drop-shadow(0 0 25px rgba(0, 123, 127, 0.2)); }
+            100% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 0px rgba(0, 123, 127, 0)); }
+        }
+        .animate-soft-pulse {
+            animation: softPulse 3s ease-in-out infinite;
+        }
+        .bg-subtle-gradient {
+            background: radial-gradient(circle at center, #ffffff 0%, #f0f7f7 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-hidden">
+<!-- Splash Screen Container -->
+<main class="relative h-screen w-full flex flex-col items-center justify-center bg-subtle-gradient overflow-hidden">
+<!-- Background Accent Decorative Elements -->
+<div class="absolute inset-0 z-0 opacity-40">
+<div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-primary-fixed-dim blur-[120px]"></div>
+<div class="absolute -bottom-[15%] -right-[10%] w-[50%] h-[50%] rounded-full bg-secondary-fixed blur-[150px]"></div>
+</div>
+<!-- Central Branding Cluster -->
+<div class="relative z-10 flex flex-col items-center justify-center">
+<!-- Logo with Pulse Effect -->
+<div class="animate-soft-pulse mb-base">
+<div class="w-32 h-32 md:w-40 md:h-40 rounded-[32px] bg-white shadow-[0_12px_40px_rgba(0,123,127,0.12)] border border-cyan-50 flex items-center justify-center">
+<!-- Brand Icon from JSON instruction: pill -->
+<span class="material-symbols-outlined text-[64px] md:text-[80px] text-primary" data-icon="pill">
+                        pill
+                    </span>
+</div>
+</div>
+<!-- Brand Name Typography -->
+<!-- Using style_brand_logo tokens: font-lexend text-xl font-bold text-teal-700 -->
+<h1 class="font-display-lg text-display-lg text-primary mt-gutter tracking-tight">
+                DistruCare
+            </h1>
+<!-- Subtle Tagline Indicator (Not text, but visual breathing space) -->
+<div class="mt-xl">
+<div class="flex gap-xs items-center">
+<span class="w-1.5 h-1.5 rounded-full bg-primary/20"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary/40"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary/20"></span>
+</div>
+</div>
+</div>
+<!-- Footer Visual Hint -->
+<div class="absolute bottom-margin z-10 flex flex-col items-center">
+<p class="font-label-md text-label-md text-outline tracking-[0.2em] mb-xs">
+                SECURE HEALTH SYSTEMS
+            </p>
+<div class="h-1 w-24 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-1/3 rounded-full"></div>
+</div>
+</div>
+</main>
+<!-- UI Integrity Script Check -->
+<!-- The prompt specified splash screen for 'DistruCare' with pill icon. -->
+<!-- Hierarchy Suppression: Navigation shells are suppressed as this is a transactional/splash screen. -->
+<!-- Contextual FAB Suppression: No FAB on splash screen. -->
+</body></html>

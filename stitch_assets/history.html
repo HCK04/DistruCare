@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>History - DistruCare</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&amp;family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#191c1e",
+                        "secondary-container": "#d2e6ef",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#afefdd",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary-fixed": "#0b1e24",
+                        "on-error-container": "#93000a",
+                        "outline": "#6e7979",
+                        "primary-fixed": "#96f1f5",
+                        "primary-container": "#007b7f",
+                        "surface-bright": "#f7f9fb",
+                        "surface-dim": "#d8dadc",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#c0ffed",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#55676f",
+                        "inverse-primary": "#7ad5d9",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#4f6169",
+                        "on-tertiary-fixed-variant": "#065043",
+                        "primary-fixed-dim": "#7ad5d9",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container-high": "#e6e8ea",
+                        "on-tertiary-fixed": "#00201a",
+                        "outline-variant": "#bdc9c9",
+                        "on-primary-fixed": "#002021",
+                        "surface-variant": "#e0e3e5",
+                        "on-background": "#191c1e",
+                        "secondary-fixed": "#d2e6ef",
+                        "secondary-fixed-dim": "#b6cad2",
+                        "on-primary-container": "#c4fdff",
+                        "on-surface-variant": "#3e4949",
+                        "tertiary": "#1f6052",
+                        "tertiary-fixed-dim": "#94d3c1",
+                        "surface": "#f7f9fb",
+                        "primary": "#006063",
+                        "surface-tint": "#00696d",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#f7f9fb",
+                        "on-primary-fixed-variant": "#004f52",
+                        "on-secondary-fixed-variant": "#374951",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary-container": "#3b796a",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface-container": "#eceef0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "40px",
+                        "md": "24px",
+                        "base": "8px",
+                        "sm": "12px",
+                        "xs": "4px",
+                        "margin": "32px",
+                        "gutter": "24px",
+                        "xl": "64px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Public Sans"],
+                        "label-lg": ["Public Sans"],
+                        "body-md": ["Public Sans"],
+                        "display-lg": ["Lexend"],
+                        "headline-md": ["Lexend"],
+                        "headline-lg": ["Lexend"],
+                        "label-md": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "display-lg": ["40px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.04em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ring-progress {
+            background: conic-gradient(#007b7f 92%, #d2e6ef 0);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 h-16 bg-white border-b border-cyan-100 shadow-[0_4px_20px_rgba(0,123,127,0.08)]">
+<div class="flex items-center gap-3">
+<div class="bg-cyan-50 p-2 rounded-xl text-teal-600">
+<span class="material-symbols-outlined" data-icon="pill">pill</span>
+</div>
+<h1 class="font-lexend text-xl font-bold text-teal-700">DistruCare</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-400 hover:bg-cyan-50 p-2 rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="A professional close-up portrait of a medical healthcare provider with a kind expression. The lighting is soft and high-key, emphasizing a clean and clinical environment. The color palette features whites and soft teals, consistent with a modern empathetic healthcare interface. The overall mood is trustworthy, professional, and minimalist." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBztwJ3EdEIy0i4PWAWWB_ScNw9DDGqKgkiKCFQekI-emjToRjGIm0_G7nD25KlKcVO9pfSGbIKoszKFLjwGkU1iENoXJjVhxQwOzqxfnMEYrnOm5pxRL8RD8xmco2bxqXHdnAta-YGMz2RqQC13Wau5f2he0qbjs1N4EsRckXlScC1bmJHGn4L02xoKh0v2_i4sy21GXdrJSnSvVvVO29riunwTprU50zb9ngu9kWMzLB7-Ury8y2iskAWYgj1rghwuuIlD5fvyH0"/>
+</div>
+</div>
+</header>
+<main class="pt-24 px-6 max-w-4xl mx-auto">
+<!-- Page Title -->
+<div class="mb-8">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">History</h2>
+<p class="font-body-md text-secondary mt-1">Review your medication adherence and records.</p>
+</div>
+<!-- Bento Grid Layout for Stats -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-12">
+<!-- Adherence Ring Card -->
+<div class="md:col-span-7 bg-surface-container-lowest rounded-xl p-8 shadow-[0_4px_20px_rgba(0,123,127,0.06)] border border-cyan-50 flex flex-col md:flex-row items-center gap-8">
+<div class="relative w-40 h-40 rounded-full flex items-center justify-center ring-progress">
+<div class="absolute w-[85%] h-[85%] bg-white rounded-full flex flex-col items-center justify-center">
+<span class="font-display-lg text-display-lg text-primary">92%</span>
+<span class="font-label-md text-label-md text-secondary uppercase">30-Day Adherence</span>
+</div>
+</div>
+<div class="flex-1 space-y-4 text-center md:text-left">
+<h3 class="font-headline-md text-headline-md text-on-surface">Great Progress!</h3>
+<p class="font-body-md text-secondary">You have missed only 2 doses in the last month. Your adherence is 5% higher than last period.</p>
+<div class="flex items-center gap-2 text-teal-600 font-label-lg bg-cyan-50 w-fit px-4 py-2 rounded-full mx-auto md:mx-0">
+<span class="material-symbols-outlined text-[18px]" data-icon="trending_up">trending_up</span>
+<span>Keep it up</span>
+</div>
+</div>
+</div>
+<!-- Mini Metrics Column -->
+<div class="md:col-span-5 grid grid-rows-2 gap-6">
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,123,127,0.04)] border border-cyan-50 flex justify-between items-center">
+<div>
+<p class="font-label-md text-secondary">Consecutive Days</p>
+<p class="font-headline-md text-headline-md text-primary">12 Days</p>
+</div>
+<div class="bg-cyan-50 p-3 rounded-full text-teal-600">
+<span class="material-symbols-outlined" data-icon="local_fire_department">local_fire_department</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,123,127,0.04)] border border-cyan-50 flex justify-between items-center">
+<div>
+<p class="font-label-md text-secondary">Total Doses Taken</p>
+<p class="font-headline-md text-headline-md text-primary">284</p>
+</div>
+<div class="bg-cyan-50 p-3 rounded-full text-teal-600">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Weekly Status Strip -->
+<div class="mb-12">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-label-lg text-on-surface uppercase tracking-wider">Weekly Overview</h3>
+<span class="font-label-md text-secondary">Nov 12 - Nov 18</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,123,127,0.04)] border border-cyan-50">
+<div class="grid grid-cols-7 gap-2">
+<div class="flex flex-col items-center gap-3">
+<span class="font-label-md text-secondary">Mon</span>
+<div class="w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]" data-icon="done">done</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3">
+<span class="font-label-md text-secondary">Tue</span>
+<div class="w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]" data-icon="done">done</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3">
+<span class="font-label-md text-secondary">Wed</span>
+<div class="w-10 h-10 rounded-full bg-error flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]" data-icon="close">close</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3">
+<span class="font-label-md text-secondary">Thu</span>
+<div class="w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center text-white shadow-lg shadow-teal-100 ring-2 ring-teal-100">
+<span class="material-symbols-outlined text-[18px]" data-icon="done">done</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3">
+<span class="font-label-md text-secondary">Fri</span>
+<div class="w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]" data-icon="done">done</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3">
+<span class="font-label-md text-secondary">Sat</span>
+<div class="w-10 h-10 rounded-full border-2 border-dashed border-cyan-200"></div>
+</div>
+<div class="flex flex-col items-center gap-3">
+<span class="font-label-md text-secondary">Sun</span>
+<div class="w-10 h-10 rounded-full border-2 border-dashed border-cyan-200"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent History List -->
+<div class="space-y-6">
+<h3 class="font-label-lg text-on-surface uppercase tracking-wider">Timeline</h3>
+<!-- Group: Nov 15 (Today) -->
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<div class="h-[1px] flex-1 bg-cyan-100"></div>
+<span class="font-label-md text-secondary whitespace-nowrap bg-surface-container-low px-3 py-1 rounded-full">Thursday, Nov 15</span>
+<div class="h-[1px] flex-1 bg-cyan-100"></div>
+</div>
+<!-- History Item 1 -->
+<div class="bg-white rounded-xl p-4 shadow-sm border border-cyan-50 flex items-center gap-4 hover:shadow-md transition-shadow">
+<div class="w-12 h-12 rounded-lg bg-cyan-50 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="medication">medication</span>
+</div>
+<div class="flex-1">
+<p class="font-label-lg text-on-surface">Lisinopril (10mg)</p>
+<p class="text-sm text-secondary">Taken at 08:15 AM</p>
+</div>
+<div class="bg-teal-50 text-teal-700 px-3 py-1 rounded-full font-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="check" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check</span>
+                        On Time
+                    </div>
+</div>
+<!-- History Item 2 -->
+<div class="bg-white rounded-xl p-4 shadow-sm border border-cyan-50 flex items-center gap-4 hover:shadow-md transition-shadow">
+<div class="w-12 h-12 rounded-lg bg-cyan-50 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="medication">medication</span>
+</div>
+<div class="flex-1">
+<p class="font-label-lg text-on-surface">Metformin (500mg)</p>
+<p class="text-sm text-secondary">Taken at 12:45 PM</p>
+</div>
+<div class="bg-cyan-50 text-teal-600 px-3 py-1 rounded-full font-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="schedule" data-weight="fill" style="font-variation-settings: 'FILL' 1;">schedule</span>
+                        Late (45m)
+                    </div>
+</div>
+</div>
+<!-- Group: Nov 14 -->
+<div class="space-y-4 pt-4">
+<div class="flex items-center gap-4">
+<div class="h-[1px] flex-1 bg-cyan-100"></div>
+<span class="font-label-md text-secondary whitespace-nowrap bg-surface-container-low px-3 py-1 rounded-full">Wednesday, Nov 14</span>
+<div class="h-[1px] flex-1 bg-cyan-100"></div>
+</div>
+<div class="bg-white rounded-xl p-4 shadow-sm border border-cyan-50 flex items-center gap-4 hover:shadow-md transition-shadow">
+<div class="w-12 h-12 rounded-lg bg-error-container/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined" data-icon="medication">medication</span>
+</div>
+<div class="flex-1">
+<p class="font-label-lg text-on-surface">Lisinopril (10mg)</p>
+<p class="text-sm text-secondary">Scheduled for 08:00 AM</p>
+</div>
+<div class="bg-error-container text-on-error-container px-3 py-1 rounded-full font-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="warning" data-weight="fill" style="font-variation-settings: 'FILL' 1;">warning</span>
+                        Missed
+                    </div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe h-20 bg-white/90 backdrop-blur-md border-t border-cyan-100 shadow-[0_-4px_20px_rgba(0,123,127,0.12)] rounded-t-2xl">
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-600 px-3 py-1 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="today">today</span>
+<span class="font-lexend text-[11px] font-medium tracking-wide">Today</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-cyan-50 text-teal-700 rounded-xl px-3 py-1 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="history" data-weight="fill" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="font-lexend text-[11px] font-medium tracking-wide">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-600 px-3 py-1 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="medication">medication</span>
+<span class="font-lexend text-[11px] font-medium tracking-wide">Meds</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-600 px-3 py-1 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-lexend text-[11px] font-medium tracking-wide">Settings</span>
+</a>
+</nav>
+</body></html>

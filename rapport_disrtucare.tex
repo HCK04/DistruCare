@@ -1,0 +1,428 @@
+\documentclass[11pt,a4paper]{article}
+
+% ─── Encodage & langue ───────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+
+% ─── Mise en page ────────────────────────────────────────────
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{microtype}
+\usepackage{setspace}
+\onehalfspacing
+
+% ─── Couleurs ────────────────────────────────────────────────
+\usepackage{xcolor}
+\definecolor{navy}{HTML}{0F172A}
+\definecolor{teal}{HTML}{14B8A6}
+\definecolor{tealdark}{HTML}{0E7C72}
+\definecolor{lightgray}{HTML}{F1F5F9}
+\definecolor{midgray}{HTML}{64748B}
+\definecolor{taken}{HTML}{16A34A}
+\definecolor{late}{HTML}{CA8A04}
+\definecolor{missed}{HTML}{DC2626}
+\definecolor{codebg}{HTML}{F8FAFC}
+
+% ─── Titres ──────────────────────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{navy}}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{tealdark}}{\thesubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.6ex plus 1ex minus .2ex}{1ex}
+
+% ─── Tableaux ────────────────────────────────────────────────
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}
+\renewcommand{\arraystretch}{1.35}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% ─── Listes ──────────────────────────────────────────────────
+\usepackage{enumitem}
+\setlist{leftmargin=1.4em,topsep=2pt,itemsep=1pt}
+\usepackage{pifont}
+
+% ─── Boîtes / encadrés ───────────────────────────────────────
+\usepackage[most]{tcolorbox}
+\newtcolorbox{infobox}[1][]{colback=lightgray,colframe=teal,boxrule=1pt,
+  arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,#1}
+\newtcolorbox{warnbox}[1][]{colback=missed!6,colframe=missed,boxrule=1pt,
+  arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,#1}
+
+% ─── Code ────────────────────────────────────────────────────
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{codebg},
+  frame=single,rulecolor=\color{midgray!40},
+  breaklines=true,columns=fullflexible,
+  xleftmargin=4pt,xrightmargin=4pt,
+  aboveskip=8pt,belowskip=8pt,
+}
+
+% ─── Liens ───────────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=tealdark,urlcolor=tealdark,
+  pdftitle={Rapport d'analyse - DisrtuCare},pdfauthor={Analyse technique}}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\color{midgray}DisrtuCare}
+\fancyhead[R]{\small\color{midgray}Rapport d'analyse technique}
+\fancyfoot[C]{\small\color{midgray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ═════════════════════════════════════════════════════════════
+\begin{document}
+
+% ─── Page de titre ───────────────────────────────────────────
+\begin{titlepage}
+\centering
+\vspace*{3cm}
+{\color{teal}\rule{\linewidth}{2pt}}\\[1cm]
+{\Huge\bfseries\color{navy} DisrtuCare}\\[0.4cm]
+{\Large\color{midgray} Distributeur de pilules intelligent}\\[0.8cm]
+{\LARGE\bfseries\color{tealdark} Rapport d'analyse technique}\\[0.3cm]
+{\large\color{midgray} Fonctionnement et pipeline mat\'eriel \& logiciel}\\[1cm]
+{\color{teal}\rule{\linewidth}{2pt}}\\[2cm]
+
+\begin{tabular}{rl}
+\textbf{Projet} & Application compagnon + firmware embarqu\'e \\[4pt]
+\textbf{Plateformes} & Android / iOS (Expo) + NodeMCU ESP8266 \\[4pt]
+\textbf{Stack} & React Native, TypeScript, SQLite, Arduino C++ \\[4pt]
+\textbf{Date} & 25 mai 2026 \\
+\end{tabular}
+
+\vfill
+{\color{midgray}\small G\'en\'er\'e \`a partir de l'analyse du code source}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ═════════════════════════════════════════════════════════════
+\section{Vue d'ensemble}
+
+\textbf{DisrtuCare} est un syst\`eme de \textbf{distributeur de pilules intelligent}
+destin\'e principalement aux \textbf{personnes \^ag\'ees}. Il combine deux mondes~:
+
+\begin{itemize}
+  \item \textbf{Un mat\'eriel autonome} (\`a base de NodeMCU/ESP8266) qui distribue
+        physiquement les pilules aux heures programm\'ees.
+  \item \textbf{Une application mobile compagnon} (Expo / React Native) qui sert de
+        tableau de bord, de suivi d'observance et de t\'el\'ecommande.
+\end{itemize}
+
+Le projet a connu une \textbf{\'evolution importante} visible dans le code~:
+\begin{itemize}
+  \item Le cahier des charges initial (\texttt{rules.md}) interdisait toute
+        connectivit\'e (\guillemotleft~simuler l'interaction, pas de
+        Bluetooth/WiFi/cloud~\guillemotright).
+  \item Cette contrainte a \'et\'e \textbf{lev\'ee}~: le projet utilise d\'esormais une
+        vraie communication \textbf{WiFi/HTTP}. On voit m\^eme les vestiges d'une phase
+        Bluetooth abandonn\'ee (\texttt{bleService.ts} ne fait plus que r\'e-exporter le
+        service HTTP).
+\end{itemize}
+
+\begin{warnbox}
+\textbf{Incoh\'erence documentaire}~: \texttt{rules.md} mentionne un \emph{Arduino Uno}
+alors que le mat\'eriel r\'eel est un \textbf{NodeMCU V3 (ESP8266)} --- choisi car il
+int\`egre le WiFi nativement.
+\end{warnbox}
+
+% ═════════════════════════════════════════════════════════════
+\section{Architecture globale}
+
+\begin{lstlisting}
++--------------------------+
+|   Telephone (Expo app)   |   <- Tableau de bord, historique, reglages
+|   React Native + SQLite  |
++------------+-------------+
+             |  HTTP/JSON sur le meme reseau WiFi (LAN)
+             |  (polling toutes les 3 s + commandes POST)
+             v
++--------------------------+
+|  NodeMCU V3 (ESP8266)    |   <- Serveur HTTP sur le port 80
+|  Firmware Arduino        |
++--+---------+----------+--+
+   | I2C     | GPIO      | GPIO
+   v         v           v
+LCD 16x2   Moteur pas   LED bleue
++ DS3231   a pas        + Bouton
+(RTC)      28BYJ-48     poussoir
+           via ULN2003
+\end{lstlisting}
+
+Le point essentiel~: \textbf{le mat\'eriel fonctionne de fa\c con autonome}. M\^eme sans
+t\'el\'ephone connect\'e, le distributeur conna\^it l'heure (RTC), distribue aux heures
+programm\'ees (sauvegard\'ees en EEPROM), et confirme la prise via le bouton.
+L'application \textbf{enrichit} l'exp\'erience mais n'est pas indispensable au
+fonctionnement de base.
+
+% ═════════════════════════════════════════════════════════════
+\section{Le pipeline mat\'eriel (firmware)}
+
+\subsection{Composants et c\^ablage}
+
+\begin{tabularx}{\linewidth}{L{3.4cm} X L{3.6cm}}
+\toprule
+\rowcolor{lightgray}\textbf{Composant} & \textbf{R\^ole} & \textbf{Connexion NodeMCU} \\
+\midrule
+NodeMCU V3 (ESP8266) & Cerveau + serveur WiFi & --- \\
+LCD 16x2 (I\textsuperscript{2}C, PCF8574) & Affichage \'etat/heure/IP & D1 (SCL), D2 (SDA) \\
+RTC DS3231 & Horloge temps r\'eel (pile CR2032) & M\^eme bus I\textsuperscript{2}C \\
+Moteur 28BYJ-48 + ULN2003 & Rotation du carrousel & D5-D8 $\rightarrow$ IN1-IN4 \\
+LED bleue & Alerte visuelle (clignotement) & D0 \\
+Bouton poussoir & Confirmation de la prise & D3 (INPUT\_PULLUP) \\
+\bottomrule
+\end{tabularx}
+
+\vspace{6pt}
+D\'etails techniques relev\'es dans \texttt{config.h}~:
+\begin{itemize}
+  \item \textbf{D8 (GPIO15)} doit \^etre LOW au d\'emarrage $\rightarrow$ le firmware
+        appelle \texttt{motorStop()} au boot pour ne pas emp\^echer le d\'emarrage de l'ESP8266.
+  \item \textbf{D3 (GPIO0)} ne doit pas \^etre maintenu enfonc\'e au boot (sinon mode flash).
+  \item \textbf{D0 (GPIO16)} est en sortie uniquement (pas d'INPUT\_PULLUP possible).
+\end{itemize}
+
+\subsection{Le moteur --- c\oe ur de la distribution}
+
+Dans \texttt{motor.cpp}, le 28BYJ-48 est pilot\'e en \textbf{demi-pas} (half-step,
+s\'equence de 8 micro-pas) pour plus de couple et de fluidit\'e~:
+\begin{itemize}
+  \item 2048 pas complets/tour $\rightarrow$ 4096 en demi-pas.
+  \item \textbf{4 compartiments} $\rightarrow$ \texttt{STEPS\_PER\_SLOT = 1024} demi-pas
+        par slot, soit $\sim$2 secondes de rotation par compartiment (\`a 2 ms/pas).
+  \item Apr\`es chaque rotation, \texttt{motorStop()} coupe le courant des bobines
+        (\'evite la surchauffe).
+\end{itemize}
+
+\subsection{La gestion du temps (astuce intelligente)}
+
+\texttt{rtc\_time.cpp} g\`ere \textbf{deux sources de temps}~:
+\begin{enumerate}
+  \item \textbf{DS3231 mat\'eriel} s'il est d\'etect\'e sur le bus I\textsuperscript{2}C
+        $\rightarrow$ garde l'heure m\^eme apr\`es coupure de courant.
+  \item \textbf{Horloge logicielle de secours} si aucun RTC n'est c\^abl\'e~: amorc\'ee
+        par l'app via \texttt{/settime} et avanc\'ee avec \texttt{millis()}. Elle d\'erive
+        un peu et se r\'einitialise au reboot, mais l'app la re-synchronise \`a chaque
+        connexion.
+\end{enumerate}
+
+\begin{infobox}
+Le concept \texttt{rtcIsRunning()} emp\^eche une distribution parasite \`a 00:00 tant que
+l'heure n'est pas connue. \textbf{Cela rend le syst\`eme fonctionnel m\^eme sans RTC c\^abl\'e.}
+\end{infobox}
+
+\subsection{La boucle principale (\texttt{distruccare.ino})}
+
+Le \texttt{loop()} ex\'ecute 4 t\^aches en continu, sans blocage~:
+
+\begin{lstlisting}
+loop() ->
+  |- server.handleClient()   // repond aux requetes HTTP de l'app
+  |- checkSchedule()         // l'heure correspond-elle a AM ou PM ?
+  |- checkButton()           // l'utilisateur a-t-il presse le bouton ?
+  +- updateLed()             // clignotement non-bloquant de la LED
+\end{lstlisting}
+
+\textbf{Cycle d'une distribution automatique~:}
+\begin{enumerate}
+  \item \texttt{checkSchedule()} d\'etecte que l'heure courante = heure AM (ou PM), et
+        qu'on n'a pas d\'ej\`a distribu\'e cette minute (\texttt{lastDispensedMin}).
+  \item \texttt{dispense("AM")}~: LCD affiche \guillemotleft~Dispensing~\guillemotright,
+        le moteur tourne d'un slot, LCD affiche \guillemotleft~Done~\guillemotright.
+  \item La \textbf{LED se met \`a clignoter} et le syst\`eme passe en
+        \texttt{awaitingConfirm = true}.
+  \item Un \textbf{\'ev\'enement} \texttt{\{"evt":"dispensed","type":"AM"\}} est mis en
+        file (incr\'emente \texttt{eventId}).
+  \item L'utilisateur prend sa pilule et \textbf{appuie sur le bouton}.
+  \item \texttt{checkButton()} (anti-rebond 50 ms) \'eteint la LED, l'allume fixe 1,5 s
+        en confirmation, puis \'emet \texttt{\{"evt":"confirmed","type":"AM"\}}.
+  \item \`A minuit, \texttt{lastDispensedMin} est r\'einitialis\'e pour les doses du lendemain.
+\end{enumerate}
+
+\subsection{Persistance EEPROM}
+
+L'horaire AM/PM et le nom du m\'edicament sont stock\'es en EEPROM (flash simul\'ee) avec
+un \textbf{octet magique \texttt{0xAB}} validant l'initialisation des donn\'ees. Ainsi,
+l'horaire \textbf{survit aux coupures de courant} sans d\'ependre de l'app.
+
+% ═════════════════════════════════════════════════════════════
+\section{Le protocole de communication (HTTP/JSON)}
+
+Le NodeMCU h\'eberge un serveur HTTP sur le \textbf{port 80}. Toute la communication est
+en JSON, avec CORS activ\'e.
+
+\subsection{Application $\rightarrow$ Appareil}
+
+\begin{tabularx}{\linewidth}{L{2.3cm} L{1.4cm} X}
+\toprule
+\rowcolor{lightgray}\textbf{Endpoint} & \textbf{M\'eth.} & \textbf{Action} \\
+\midrule
+\texttt{/status} & GET & Renvoie l'horaire, l'heure, le dernier \'ev\'enement \\
+\texttt{/sync} & POST & Met \`a jour l'horaire + EEPROM + LCD \\
+\texttt{/settime} & POST & R\`egle l'horloge DS3231 \\
+\texttt{/led} & POST & Allume/\'eteint la LED \\
+\texttt{/motor} & POST & Fait tourner le distributeur (test) \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Appareil $\rightarrow$ Application (par sondage)}
+
+L'app ne re\c coit pas de push~: elle \textbf{interroge \texttt{/status} toutes les
+3 secondes}. La r\'eponse contient un compteur \texttt{event\_id} et un
+\texttt{last\_event}. Quand \texttt{event\_id} change, l'app sait qu'un nouvel
+\'ev\'enement mat\'eriel s'est produit et d\'eclenche le gestionnaire correspondant.
+
+\begin{lstlisting}
+{ "am":"08:00", "pm":"20:00", "med":"...", "time":"14:30",
+  "rtc":true, "awaiting":false, "event_id":3,
+  "last_event":{"evt":"confirmed","type":"AM"} }
+\end{lstlisting}
+
+C'est un mod\`ele de \textbf{sondage par compteur d'\'ev\'enements} --- simple et robuste
+sur un microcontr\^oleur, sans WebSockets.
+
+% ═════════════════════════════════════════════════════════════
+\section{Le pipeline logiciel (application mobile)}
+
+\subsection{Stack technique}
+\begin{itemize}
+  \item \textbf{Expo $\sim$54} / \textbf{React Native 0.81} / \textbf{React 19} / \textbf{TypeScript}
+  \item Navigation par onglets~: \textbf{Dashboard / History / Device / Settings}
+  \item \textbf{expo-sqlite}~: base locale, hors-ligne par d\'efaut
+  \item \textbf{expo-notifications}~: rappels locaux
+  \item \textbf{react-native-reanimated}~: animations fluides
+\end{itemize}
+
+\subsection{La base de donn\'ees SQLite}
+Deux tables~:
+\begin{itemize}
+  \item \textbf{\texttt{schedule}}~: une seule ligne (m\'edicament, heures AM/PM,
+        notifications, IP de l'appareil, drapeau setup).
+  \item \textbf{\texttt{dose\_logs}}~: journal des prises, contrainte
+        \texttt{UNIQUE(date, dose\_type)} $\rightarrow$ une entr\'ee AM et une PM par jour,
+        statut \texttt{taken/missed/late/pending}.
+\end{itemize}
+
+\subsection{La couche mat\'eriel (\texttt{httpService.ts})}
+Pont entre l'app et l'appareil, le singleton \texttt{HttpService} g\`ere~:
+\begin{itemize}
+  \item \textbf{\texttt{connect()}}~: ping \texttt{/status} (timeout 6 s), puis envoie
+        automatiquement \texttt{/settime} pour synchroniser l'horloge de l'appareil sur
+        celle du t\'el\'ephone, puis d\'emarre le sondage.
+  \item \textbf{Sondage}~: toutes les 3 s, r\'ecup\`ere \texttt{/status}. Si l'\texttt{event\_id}
+        a chang\'e, notifie les abonn\'es. En cas d'\'echec $\rightarrow$ d\'econnexion automatique.
+  \item L'IP de l'appareil est \textbf{persist\'ee en SQLite} $\rightarrow$ reconnexion sans ressaisie.
+\end{itemize}
+
+\subsection{La boucle de r\'etroaction compl\`ete (pipeline bout en bout)}
+
+\begin{lstlisting}
+1. Reglages : l'utilisateur regle 08:00 / 20:00 dans SettingsScreen
+       |
+       |-> Ecrit en SQLite local
+       |-> POST /sync -> l'appareil met a jour son EEPROM + LCD
+       +-> scheduleDoseReminders() -> notifications locales programmees
+
+2. A 08:00 : l'appareil distribue automatiquement (moteur + LED clignote)
+       +-> evenement "dispensed" place dans /status
+
+3. L'app (en sondage) voit l'event_id changer -> l'affiche dans le journal
+
+4. L'utilisateur prend la pilule et APPUIE sur le bouton physique
+       +-> evenement "confirmed" dans /status
+
+5. DashboardScreen capte "confirmed" -> logDose('AM','taken')
+       |-> Ecrit "taken" en SQLite
+       +-> Affiche une alerte "Dose Confirmed"
+
+6. Les statistiques d'observance (anneau 30 jours) se recalculent
+\end{lstlisting}
+
+\begin{infobox}
+Le geste physique sur le distributeur \textbf{enregistre automatiquement la prise dans
+l'app} --- c'est le point fort de l'int\'egration (\texttt{DashboardScreen.tsx}).
+\end{infobox}
+
+\subsection{Les \'ecrans}
+
+\begin{tabularx}{\linewidth}{L{2.6cm} X}
+\toprule
+\rowcolor{lightgray}\textbf{\'Ecran} & \textbf{R\^ole} \\
+\midrule
+\textbf{Dashboard} & Prochaine dose (compte \`a rebours), anneau d'observance 30 j, cartes AM/PM (Taken/Missed/Late), auto-log depuis le mat\'eriel \\
+\textbf{History} & Journaux quotidiens/hebdomadaires, codes couleur \\
+\textbf{Device} & Saisie de l'IP, connexion, contr\^oles de test (Sync, LED, moteur), journal d'\'ev\'enements en direct \\
+\textbf{Settings} & Heures AM/PM, nom du m\'edicament, toggle notifications, reset des logs du jour \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Notifications locales}
+\`A chaque sauvegarde de l'horaire, l'app annule puis reprogramme \textbf{4 notifications
+quotidiennes}~: rappel AM, rappel PM, relance AM +30 min, relance PM +30 min. Tout est
+local, sans internet.
+
+\subsection{Design \& accessibilit\'e}
+Conforme au cahier des charges \guillemotleft~personnes \^ag\'ees~\guillemotright~: grandes
+polices (18--22 px), fort contraste (fond bleu marine \texttt{\#0F172A}, accent turquoise
+\texttt{\#14B8A6}), grandes cibles tactiles ($\geq$56 px), code couleur
+{\color{taken}\textbf{vert = pris}} / {\color{late}\textbf{jaune = en retard}} /
+{\color{missed}\textbf{rouge = manqu\'e}}, animations douces.
+
+% ═════════════════════════════════════════════════════════════
+\section{\'Etat d'avancement}
+
+\begin{tabularx}{\linewidth}{L{4.5cm} L{2cm} X}
+\toprule
+\rowcolor{lightgray}\textbf{Phase} & \textbf{Statut} & \textbf{Notes} \\
+\midrule
+1 --- C\^ablage physique & {\color{missed}\textbf{\ding{55}}} & Moteur D5-D8, LED, bouton non c\^abl\'es \\
+2 --- Protocole HTTP & {\color{taken}\textbf{OK}} & D\'efini et impl\'ement\'e \\
+3 --- Firmware & {\color{taken}\textbf{OK}} & T\'el\'evers\'e, WiFi connect\'e, endpoints v\'erifi\'es \\
+4 --- Int\'egration React Native & {\color{taken}\textbf{OK}} & Service HTTP op\'erationnel, BLE retir\'e \\
+5 --- Tests bout-en-bout & {\color{missed}\textbf{\ding{55}}} & Bloqu\'e par la phase 1 \\
+6 --- Finition (v1.1.0) & {\color{missed}\textbf{\ding{55}}} & Bloqu\'e par la phase 5 \\
+\bottomrule
+\end{tabularx}
+
+\vspace{6pt}
+\textbf{En r\'esum\'e}~: la cha\^ine logicielle (app + protocole + firmware) est compl\`ete et
+le firmware tourne. Ce qui manque, c'est le \textbf{c\^ablage physique du moteur, de la LED
+et du bouton}, qui bloque les tests de bout en bout.
+
+% ═════════════════════════════════════════════════════════════
+\section{Points forts et observations}
+
+\subsection*{Points forts}
+\begin{itemize}
+  \item Architecture \textbf{d\'ecoupl\'ee}~: le mat\'eriel reste autonome, l'app est un
+        compagnon optionnel.
+  \item Repli intelligent \textbf{RTC mat\'eriel $\rightarrow$ horloge logicielle}~: marche
+        m\^eme sans DS3231 c\^abl\'e.
+  \item Protocole HTTP simple et robuste (sondage par \texttt{event\_id}), compatible
+        \textbf{Expo Go} (pas de modules natifs).
+  \item Boucle de r\'etroaction \'el\'egante~: le bouton physique enregistre la prise dans l'app.
+\end{itemize}
+
+\subsection*{Points d'attention}
+\begin{warnbox}
+\begin{itemize}
+  \item \textbf{Identifiants WiFi en clair} dans \texttt{config.h} (SSID + mot de passe
+        versionn\'es dans Git) --- \`a externaliser.
+  \item \textbf{Incoh\'erences documentaires}~: \texttt{rules.md} (Arduino Uno, \guillemotleft~pas
+        de connectivit\'e~\guillemotright) contredit la r\'ealit\'e. Le SSID diff\`ere entre
+        les fichiers (\texttt{La\_Fibre\_dOrange\_0E96} dans le firmware vs \texttt{MG1}
+        affich\'e dans l'\'ecran Device).
+  \item \textbf{HTTP en clair sans authentification}~: n'importe qui sur le LAN peut piloter
+        le moteur. Acceptable pour un prototype.
+  \item \textbf{Limite du syst\`eme d'\'ev\'enements}~: \texttt{event\_id} est un
+        \texttt{uint8\_t} (d\'eborde \`a 256) et un seul \'ev\'enement est m\'emoris\'e. Si
+        deux \'ev\'enements surviennent entre deux sondages, le premier est perdu.
+\end{itemize}
+\end{warnbox}
+
+\end{document}

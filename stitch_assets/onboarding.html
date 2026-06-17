@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Welcome to DistruCare</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#191c1e",
+                    "secondary-container": "#d2e6ef",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed": "#afefdd",
+                    "inverse-surface": "#2d3133",
+                    "on-secondary-fixed": "#0b1e24",
+                    "on-error-container": "#93000a",
+                    "outline": "#6e7979",
+                    "primary-fixed": "#96f1f5",
+                    "primary-container": "#007b7f",
+                    "surface-bright": "#f7f9fb",
+                    "surface-dim": "#d8dadc",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-container": "#c0ffed",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#55676f",
+                    "inverse-primary": "#7ad5d9",
+                    "on-secondary": "#ffffff",
+                    "secondary": "#4f6169",
+                    "on-tertiary-fixed-variant": "#065043",
+                    "primary-fixed-dim": "#7ad5d9",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-high": "#e6e8ea",
+                    "on-tertiary-fixed": "#00201a",
+                    "outline-variant": "#bdc9c9",
+                    "on-primary-fixed": "#002021",
+                    "surface-variant": "#e0e3e5",
+                    "on-background": "#191c1e",
+                    "secondary-fixed": "#d2e6ef",
+                    "secondary-fixed-dim": "#b6cad2",
+                    "on-primary-container": "#c4fdff",
+                    "on-surface-variant": "#3e4949",
+                    "tertiary": "#1f6052",
+                    "tertiary-fixed-dim": "#94d3c1",
+                    "surface": "#f7f9fb",
+                    "primary": "#006063",
+                    "surface-tint": "#00696d",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#f7f9fb",
+                    "on-primary-fixed-variant": "#004f52",
+                    "on-secondary-fixed-variant": "#374951",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary-container": "#3b796a",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-container": "#eceef0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "40px",
+                    "md": "24px",
+                    "base": "8px",
+                    "sm": "12px",
+                    "xs": "4px",
+                    "margin": "32px",
+                    "gutter": "24px",
+                    "xl": "64px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Public Sans"],
+                    "label-lg": ["Public Sans"],
+                    "body-md": ["Public Sans"],
+                    "display-lg": ["Lexend"],
+                    "headline-md": ["Lexend"],
+                    "headline-lg": ["Lexend"],
+                    "label-md": ["Public Sans"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["40px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.04em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 50%, #d2e6ef 0%, #f7f9fb 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased overflow-x-hidden">
+<!-- Suppressing TopAppBar and BottomNavBar as per "Destination Rule" for Onboarding Flow -->
+<main class="min-h-screen flex flex-col items-center justify-center px-margin py-xl relative">
+<!-- Visual Background Decoration -->
+<div class="absolute inset-0 z-0 opacity-40 hero-gradient pointer-events-none"></div>
+<div class="z-10 w-full max-w-lg flex flex-col items-center text-center">
+<!-- Branding Header -->
+<div class="mb-lg space-y-base">
+<div class="flex items-center justify-center gap-base mb-sm">
+<span class="material-symbols-outlined text-[48px] text-primary" data-icon="pill">pill</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-primary tracking-tight">DistruCare</h1>
+<p class="font-headline-md text-headline-md text-secondary tracking-wide">Your medication, managed.</p>
+</div>
+<!-- Hero Image / Illustration Placeholder -->
+<div class="w-full h-64 md:h-80 mb-xl rounded-3xl overflow-hidden shadow-[0_8px_30px_rgba(0,123,127,0.12)] border-4 border-white">
+<img alt="Medication Management" class="w-full h-full object-cover" data-alt="A clean, professional medical flat-lay featuring organized medicine bottles, a sleek digital tablet showing health data, and a minimalist stethoscope on a bright white surface. The lighting is soft and clinical, using a palette of white and light teal blue. The composition is airy and modern, conveying a sense of organized healthcare efficiency and empathetic medical support in a bright, light-mode environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvFB_hy1WpKrne3U7ZygjcYqDK8f9Tg_1cTAehbQgQlG0y0PqhEQHRs71lq5UMs-0CA4jEstAHFMsZtAXIZe_enqkhYEpOXQijY7f5XOxvNNnhp3_e2rsB7EARnf7a7TNtyezp4mAG3lGCPKGQgN0W0aP-C-yKHoG6Ov7lEBju2PMa4xRO138idBOLDWxgtFk1dCtwG4863NeNC-jAlnShq9C1qs5dhaUmDiA_NbfL7VLMKKiapjFppVmHcX_FRnj43-s3Hy2vqNc"/>
+</div>
+<!-- Bento-style Feature Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter w-full mb-xl">
+<!-- Feature 1 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0_4px_12px_rgba(0,123,127,0.04)] flex items-start gap-base text-left border border-outline-variant/30">
+<div class="bg-secondary-container p-sm rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="schedule">schedule</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface mb-xs">Smart Schedule</h3>
+<p class="font-body-md text-label-md text-on-surface-variant">Intelligent reminders tailored to your daily routine.</p>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0_4px_12px_rgba(0,123,127,0.04)] flex items-start gap-base text-left border border-outline-variant/30">
+<div class="bg-secondary-container p-sm rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="monitoring">monitoring</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface mb-xs">Health Track</h3>
+<p class="font-body-md text-label-md text-on-surface-variant">Monitor adherence and symptoms in real-time charts.</p>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0_4px_12px_rgba(0,123,127,0.04)] flex items-start gap-base text-left border border-outline-variant/30">
+<div class="bg-secondary-container p-sm rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="history">history</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface mb-xs">Full History</h3>
+<p class="font-body-md text-label-md text-on-surface-variant">Keep a detailed log of all past prescriptions and doses.</p>
+</div>
+</div>
+<!-- Feature 4 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0_4px_12px_rgba(0,123,127,0.04)] flex items-start gap-base text-left border border-outline-variant/30">
+<div class="bg-secondary-container p-sm rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="notifications_active">notifications_active</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface mb-xs">Instant Reminders</h3>
+<p class="font-body-md text-label-md text-on-surface-variant">Never miss a dose with high-priority notifications.</p>
+</div>
+</div>
+</div>
+<!-- CTA Section -->
+<div class="w-full flex flex-col gap-base">
+<button class="bg-primary text-on-primary w-full h-[56px] rounded-full font-label-lg text-lg shadow-[0_8px_16px_rgba(0,96,99,0.2)] active:scale-95 transition-all duration-150">
+                    Get Started
+                </button>
+</div>
+<!-- Accessibility Footer -->
+<div class="mt-xl flex flex-wrap justify-center gap-md opacity-60">
+<span class="font-label-md text-on-surface-variant">Privacy Policy</span>
+<span class="font-label-md text-on-surface-variant">Terms of Service</span>
+<span class="font-label-md text-on-surface-variant">Contact Support</span>
+</div>
+</div>
+</main>
+<!-- Background Elements -->
+<div class="fixed top-0 right-0 -mr-24 -mt-24 w-64 h-64 bg-secondary-container rounded-full blur-[80px] opacity-20 pointer-events-none"></div>
+<div class="fixed bottom-0 left-0 -ml-24 -mb-24 w-96 h-96 bg-primary-fixed rounded-full blur-[100px] opacity-30 pointer-events-none"></div>
+</body></html>

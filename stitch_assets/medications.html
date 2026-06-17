@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Medications - DistruCare</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&amp;family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#191c1e",
+                    "secondary-container": "#d2e6ef",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed": "#afefdd",
+                    "inverse-surface": "#2d3133",
+                    "on-secondary-fixed": "#0b1e24",
+                    "on-error-container": "#93000a",
+                    "outline": "#6e7979",
+                    "primary-fixed": "#96f1f5",
+                    "primary-container": "#007b7f",
+                    "surface-bright": "#f7f9fb",
+                    "surface-dim": "#d8dadc",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-container": "#c0ffed",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#55676f",
+                    "inverse-primary": "#7ad5d9",
+                    "on-secondary": "#ffffff",
+                    "secondary": "#4f6169",
+                    "on-tertiary-fixed-variant": "#065043",
+                    "primary-fixed-dim": "#7ad5d9",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-high": "#e6e8ea",
+                    "on-tertiary-fixed": "#00201a",
+                    "outline-variant": "#bdc9c9",
+                    "on-primary-fixed": "#002021",
+                    "surface-variant": "#e0e3e5",
+                    "on-background": "#191c1e",
+                    "secondary-fixed": "#d2e6ef",
+                    "secondary-fixed-dim": "#b6cad2",
+                    "on-primary-container": "#c4fdff",
+                    "on-surface-variant": "#3e4949",
+                    "tertiary": "#1f6052",
+                    "tertiary-fixed-dim": "#94d3c1",
+                    "surface": "#f7f9fb",
+                    "primary": "#006063",
+                    "surface-tint": "#00696d",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#f7f9fb",
+                    "on-primary-fixed-variant": "#004f52",
+                    "on-secondary-fixed-variant": "#374951",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary-container": "#3b796a",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-container": "#eceef0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "40px",
+                    "md": "24px",
+                    "base": "8px",
+                    "sm": "12px",
+                    "xs": "4px",
+                    "margin": "32px",
+                    "gutter": "24px",
+                    "xl": "64px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Public Sans"],
+                    "label-lg": ["Public Sans"],
+                    "body-md": ["Public Sans"],
+                    "display-lg": ["Lexend"],
+                    "headline-md": ["Lexend"],
+                    "headline-lg": ["Lexend"],
+                    "label-md": ["Public Sans"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["40px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.04em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f7f9fb;
+            font-family: 'Public Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .font-lexend { font-family: 'Lexend', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface">
+<!-- TopAppBar Section -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 h-16 bg-white border-b border-cyan-100 shadow-[0_4px_20px_rgba(0,123,127,0.08)]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-teal-600" data-icon="pill">pill</span>
+<h1 class="font-lexend text-xl font-bold text-teal-700">DistruCare</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed ring-2 ring-primary-container/10">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="A professional close-up portrait of a healthcare worker with a warm, empathetic expression. The person is wearing a clean white clinical coat against a soft, out-of-focus medical office background. The lighting is bright and natural, reflecting a modern, high-end healthcare aesthetic with cool blue and teal undertones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9KJKYvaR2b7R0rdcLjsHyspYV9A7O3owx_FOpUBUdzcQGck2UNQgsuJhUT4-V2SpYwDFncmMzQ77BYiiT1XzaU6Nr0XjGrRE8GWp0ng53S2KgmXWPQ0XXEXhyDVHJHW9DaYaYjqe71eNmztPRiAzhLGWAMGfTeSJNejPkeaI8CQqUPGXsuLFhDwJG9QYfTz_rqgKJJVqbMnqb7ym1vD2qT7pBCbUEvLe_UlX_PFbv9tdeiLYaBUsTZiHK7yCxsfLp-WzvR-qL1Mc"/>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-24 pb-32 px-6 max-w-2xl mx-auto">
+<header class="mb-8">
+<h2 class="font-headline-lg text-primary text-3xl mb-2">Medications</h2>
+<p class="font-body-md text-secondary">Manage your active prescriptions and daily supplements.</p>
+</header>
+<!-- Bento Grid Styled Med List -->
+<div class="grid grid-cols-1 gap-4">
+<!-- Medication Card 1: Metformin -->
+<div class="group relative bg-white rounded-xl shadow-[0_4px_20px_rgba(0,123,127,0.06)] border border-cyan-50/50 overflow-hidden hover:shadow-[0_8px_30px_rgba(0,123,127,0.12)] transition-all duration-300">
+<div class="absolute left-0 top-0 bottom-0 w-2 bg-primary"></div>
+<div class="p-5 pl-7 flex items-center justify-between">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-headline-md text-on-surface font-semibold">Metformin</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-wider">Active</span>
+</div>
+<p class="font-label-lg text-secondary mb-3">500mg • Oral Tablet</p>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 text-on-surface-variant bg-surface-container-low px-3 py-1 rounded-lg">
+<span class="material-symbols-outlined text-[18px]" data-icon="schedule">schedule</span>
+<span class="text-label-md">Twice Daily</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant bg-surface-container-low px-3 py-1 rounded-lg">
+<span class="material-symbols-outlined text-[18px]" data-icon="inventory_2">inventory_2</span>
+<span class="text-label-md">14 Pills left</span>
+</div>
+</div>
+</div>
+<button class="w-12 h-12 flex items-center justify-center rounded-xl bg-primary-fixed/30 text-primary-container hover:bg-primary-container hover:text-white transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Medication Card 2: Lisinopril -->
+<div class="group relative bg-white rounded-xl shadow-[0_4px_20px_rgba(0,123,127,0.06)] border border-cyan-50/50 overflow-hidden hover:shadow-[0_8px_30px_rgba(0,123,127,0.12)] transition-all duration-300">
+<div class="absolute left-0 top-0 bottom-0 w-2 bg-tertiary"></div>
+<div class="p-5 pl-7 flex items-center justify-between">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-headline-md text-on-surface font-semibold">Lisinopril</span>
+</div>
+<p class="font-label-lg text-secondary mb-3">10mg • Blood Pressure</p>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 text-on-surface-variant bg-surface-container-low px-3 py-1 rounded-lg">
+<span class="material-symbols-outlined text-[18px]" data-icon="schedule">schedule</span>
+<span class="text-label-md">Morning Only</span>
+</div>
+<div class="flex items-center gap-1.5 text-error-container text-on-error-container bg-error-container/20 px-3 py-1 rounded-lg">
+<span class="material-symbols-outlined text-[18px]" data-icon="warning">warning</span>
+<span class="text-label-md">Low Supply (3 left)</span>
+</div>
+</div>
+</div>
+<button class="w-12 h-12 flex items-center justify-center rounded-xl bg-primary-fixed/30 text-primary-container hover:bg-primary-container hover:text-white transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Medication Card 3: Atorvastatin -->
+<div class="group relative bg-white rounded-xl shadow-[0_4px_20px_rgba(0,123,127,0.06)] border border-cyan-50/50 overflow-hidden hover:shadow-[0_8px_30px_rgba(0,123,127,0.12)] transition-all duration-300">
+<div class="absolute left-0 top-0 bottom-0 w-2 bg-primary"></div>
+<div class="p-5 pl-7 flex items-center justify-between">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-headline-md text-on-surface font-semibold">Atorvastatin</span>
+</div>
+<p class="font-label-lg text-secondary mb-3">20mg • Cholesterol</p>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 text-on-surface-variant bg-surface-container-low px-3 py-1 rounded-lg">
+<span class="material-symbols-outlined text-[18px]" data-icon="schedule">schedule</span>
+<span class="text-label-md">Before Bed</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant bg-surface-container-low px-3 py-1 rounded-lg">
+<span class="material-symbols-outlined text-[18px]" data-icon="inventory_2">inventory_2</span>
+<span class="text-label-md">28 Pills left</span>
+</div>
+</div>
+</div>
+<button class="w-12 h-12 flex items-center justify-center rounded-xl bg-primary-fixed/30 text-primary-container hover:bg-primary-container hover:text-white transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Empty State Context -->
+<div class="mt-8 p-10 border-2 border-dashed border-cyan-100 rounded-2xl flex flex-col items-center justify-center text-center">
+<div class="w-16 h-16 bg-cyan-50 rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-teal-600 text-3xl" data-icon="medication_liquid">medication_liquid</span>
+</div>
+<h3 class="font-headline-md text-on-surface-variant mb-2">Refill History</h3>
+<p class="text-label-lg text-secondary max-w-xs">View your past prescriptions and refill trends in the History tab.</p>
+<button class="mt-6 text-primary font-label-lg flex items-center gap-2 hover:underline">
+                    View full history <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+<!-- FAB: Add Medication -->
+<button class="fixed right-6 bottom-28 w-14 h-14 bg-primary text-white rounded-2xl shadow-[0_12px_24px_rgba(0,96,99,0.3)] flex items-center justify-center active:scale-90 transition-transform duration-200 z-[60]">
+<span class="material-symbols-outlined text-3xl" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar Section -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe h-20 bg-white/90 backdrop-blur-md border-t border-cyan-100 shadow-[0_-4px_20px_rgba(0,123,127,0.12)] rounded-t-2xl">
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-600 transition-colors px-3 py-1" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="today">today</span>
+<span class="font-lexend text-[11px] font-medium tracking-wide">Today</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-600 transition-colors px-3 py-1" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="history">history</span>
+<span class="font-lexend text-[11px] font-medium tracking-wide">History</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-cyan-50 text-teal-700 rounded-xl px-3 py-1 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="medication" data-weight="fill" style="font-variation-settings: 'FILL' 1;">medication</span>
+<span class="font-lexend text-[11px] font-medium tracking-wide">Meds</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-600 transition-colors px-3 py-1" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="settings">settings</span>
+<span class="font-lexend text-[11px] font-medium tracking-wide">Settings</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx expo *)",
+      "Bash(npm uninstall *)",
+      "Bash(arduino-cli version *)",
+      "Bash(where arduino-cli *)",
+      "Bash(where arduino *)",
+      "Bash(where arduino-ide *)",
+      "Bash(Get-ChildItem \"C:\\\\Program Files\" -Directory)",
+      "Bash(Select-Object Name)",
+      "Bash(C:\\\\arduino-cli\\\\arduino-cli.exe monitor *)",
+      "Bash(cmd /c \"C:\\\\arduino-cli\\\\arduino-cli.exe monitor -p COM8 -c baudrate=115200 2>&1\")",
+      "PowerShell([System.IO.Ports.SerialPort]::GetPortNames\\(\\))",
+      "PowerShell(Invoke-RestMethod -Uri \"http://192.168.1.5/status\" -Method GET -TimeoutSec 10 | ConvertTo-Json)",
+      "PowerShell(Start-Process powershell -ArgumentList '-NoExit', '-Command', 'Set-Location \"C:\\\\xampp\\\\htdocs\\\\DisrtuCare\"; npx expo start')",
+      "WebFetch(domain:www.instructables.com)"
+    ]
+  }
+}
