@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
   TextInput, Switch, Alert, Platform,
@@ -21,8 +21,6 @@ import { timeStringToDate, dateToTimeString } from '../utils/dateHelpers';
 import { combinedMedLabel, parseMedList } from '../db/queries';
 import { useHardware } from '../hardware/HardwareContext';
 
-type MedItem = { id: number; name: string };
-
 export default function SettingsScreen() {
   const { fonts, largeText, setLargeText } = useUI();
   const styles = useMemo(() => makeStyles(fonts), [fonts]);
@@ -30,9 +28,10 @@ export default function SettingsScreen() {
   const { resetToday } = useTodayLogs();
   const { status: hwStatus, syncSchedule } = useHardware();
 
-  const [amMeds, setAmMeds] = useState<MedItem[]>([]);
-  const [pmMeds, setPmMeds] = useState<MedItem[]>([]);
-  const nextId = useRef(1);
+  // Une seule prise possible par moment (matin / soir). L'un OU l'autre peut
+  // être vide, mais il faut toujours conserver au moins un médicament.
+  const [amMed, setAmMed] = useState('');
+  const [pmMed, setPmMed] = useState('');
   const [amTime, setAmTime] = useState(new Date());
   const [pmTime, setPmTime] = useState(new Date());
   const [notifEnabled, setNotifEnabled] = useState(true);
@@ -42,38 +41,33 @@ export default function SettingsScreen() {
   const [showAmPicker, setShowAmPicker] = useState(false);
   const [showPmPicker, setShowPmPicker] = useState(false);
 
-  // Convert a stored list into editable rows; always keep at least one input row.
-  const toItems = useCallback((raw: string): MedItem[] => {
-    const names = parseMedList(raw);
-    const list = (names.length ? names : ['']).map((name) => ({ id: nextId.current++, name }));
-    return list;
-  }, []);
-
   useFocusEffect(
     useCallback(() => {
       if (schedule) {
-        setAmMeds(toItems(schedule.am_medication_name));
-        setPmMeds(toItems(schedule.pm_medication_name));
+        setAmMed(parseMedList(schedule.am_medication_name)[0] ?? '');
+        setPmMed(parseMedList(schedule.pm_medication_name)[0] ?? '');
         setAmTime(timeStringToDate(schedule.am_time));
         setPmTime(timeStringToDate(schedule.pm_time));
         setNotifEnabled(schedule.notifications_enabled === 1);
       }
-    }, [schedule, toItems])
+    }, [schedule])
   );
 
-  // List editing helpers (shared by morning & evening lists).
-  const editMed = (setList: React.Dispatch<React.SetStateAction<MedItem[]>>, id: number, name: string) =>
-    setList((prev) => prev.map((m) => (m.id === id ? { ...m, name } : m)));
-  const addMed = (setList: React.Dispatch<React.SetStateAction<MedItem[]>>) =>
-    setList((prev) => [...prev, { id: nextId.current++, name: '' }]);
-  const removeMed = (setList: React.Dispatch<React.SetStateAction<MedItem[]>>, id: number) =>
-    setList((prev) => (prev.length <= 1 ? prev : prev.filter((m) => m.id !== id)));
+  // Une prise est « active » si elle a un médicament. On ne peut retirer une
+  // prise que si l'autre est renseignée : il faut toujours garder au moins un
+  // médicament (matin OU soir). L'heure suit l'état du médicament : pas de
+  // médicament → l'heure correspondante est désactivée.
+  const amActive = !!amMed.trim();
+  const pmActive = !!pmMed.trim();
+  const canRemove = amActive && pmActive;
 
   const handleSave = async () => {
-    const amList = amMeds.map((m) => m.name.trim()).filter(Boolean);
-    const pmList = pmMeds.map((m) => m.name.trim()).filter(Boolean);
-    if (!amList.length || !pmList.length) {
-      Alert.alert('Champ requis', 'Ajoutez au moins un médicament pour le matin et pour le soir.');
+    const am = amMed.trim();
+    const pm = pmMed.trim();
+    const amList = am ? [am] : [];
+    const pmList = pm ? [pm] : [];
+    if (!amList.length && !pmList.length) {
+      Alert.alert('Champ requis', 'Conservez au moins un médicament, le matin ou le soir.');
       return;
     }
     setSaving(true);
@@ -144,29 +138,33 @@ export default function SettingsScreen() {
           />
         </View>
 
-        {/* Médicaments du matin */}
-        <MedListSection
+        {/* Médicament du matin */}
+        <MedSingleSection
           styles={styles} fonts={fonts}
-          label="Médicaments du matin"
+          label="Médicament du matin"
           icon="partly-sunny-outline"
           placeholder="ex. Metformine 500 mg"
-          items={amMeds}
-          onEdit={(id, name) => editMed(setAmMeds, id, name)}
-          onAdd={() => addMed(setAmMeds)}
-          onRemove={(id) => removeMed(setAmMeds, id)}
+          value={amMed}
+          onChange={setAmMed}
+          onRemove={() => setAmMed('')}
+          canRemove={canRemove}
         />
 
-        {/* Médicaments du soir */}
-        <MedListSection
+        {/* Médicament du soir */}
+        <MedSingleSection
           styles={styles} fonts={fonts}
-          label="Médicaments du soir"
+          label="Médicament du soir"
           icon="moon-outline"
           placeholder="ex. Atorvastatine 20 mg"
-          items={pmMeds}
-          onEdit={(id, name) => editMed(setPmMeds, id, name)}
-          onAdd={() => addMed(setPmMeds)}
-          onRemove={(id) => removeMed(setPmMeds, id)}
+          value={pmMed}
+          onChange={setPmMed}
+          onRemove={() => setPmMed('')}
+          canRemove={canRemove}
         />
+
+        <Text style={styles.medHint}>
+          Une prise par moment. Vous pouvez retirer celle du matin ou celle du soir, mais gardez-en au moins une.
+        </Text>
 
         {/* Heure du matin */}
         <SectionLabel styles={styles} label="Heure de la dose du matin" />
@@ -278,49 +276,42 @@ function SectionLabel({ styles, label }: { styles: any; label: string }) {
   return <Text style={styles.sectionLabel}>{label}</Text>;
 }
 
-function MedListSection({
-  styles, fonts, label, icon, placeholder, items, onEdit, onAdd, onRemove,
+function MedSingleSection({
+  styles, fonts, label, icon, placeholder, value, onChange, onRemove, canRemove,
 }: {
   styles: any;
   fonts: Fonts;
   label: string;
   icon: keyof typeof Ionicons.glyphMap;
   placeholder: string;
-  items: MedItem[];
-  onEdit: (id: number, name: string) => void;
-  onAdd: () => void;
-  onRemove: (id: number) => void;
+  value: string;
+  onChange: (text: string) => void;
+  onRemove: () => void;
+  canRemove: boolean;
 }) {
-  const single = items.length <= 1;
   return (
     <>
       <SectionLabel styles={styles} label={label} />
-      {items.map((item) => (
-        <View key={item.id} style={styles.medRow}>
-          <Ionicons name={icon} size={fonts.lg} color={Colors.accent} />
-          <TextInput
-            style={styles.medInput}
-            value={item.name}
-            onChangeText={(t) => onEdit(item.id, t)}
-            placeholder={placeholder}
-            placeholderTextColor={Colors.textMuted}
-            maxLength={50}
-          />
-          <TouchableOpacity
-            onPress={() => onRemove(item.id)}
-            disabled={single}
-            style={styles.medRemoveBtn}
-            accessibilityLabel="Retirer ce médicament"
-            activeOpacity={0.7}
-          >
-            <Ionicons name="close-circle" size={fonts.xl} color={single ? Colors.border : Colors.missed} />
-          </TouchableOpacity>
-        </View>
-      ))}
-      <TouchableOpacity style={styles.addMedBtn} onPress={onAdd} activeOpacity={0.8}>
-        <Ionicons name="add-circle-outline" size={fonts.md} color={Colors.accent} />
-        <Text style={styles.addMedText}>Ajouter un médicament</Text>
-      </TouchableOpacity>
+      <View style={styles.medRow}>
+        <Ionicons name={icon} size={fonts.lg} color={Colors.accent} />
+        <TextInput
+          style={styles.medInput}
+          value={value}
+          onChangeText={onChange}
+          placeholder={placeholder}
+          placeholderTextColor={Colors.textMuted}
+          maxLength={50}
+        />
+        <TouchableOpacity
+          onPress={onRemove}
+          disabled={!canRemove}
+          style={styles.medRemoveBtn}
+          accessibilityLabel="Retirer ce médicament"
+          activeOpacity={0.7}
+        >
+          <Ionicons name="close-circle" size={fonts.xl} color={canRemove ? Colors.missed : Colors.border} />
+        </TouchableOpacity>
+      </View>
     </>
   );
 }
@@ -391,23 +382,12 @@ function makeStyles(f: Fonts) {
     medRemoveBtn: {
       padding: Spacing.xs,
     },
-    addMedBtn: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: Spacing.xs,
-      paddingVertical: 12,
+    medHint: {
+      fontSize: f.xs,
+      color: Colors.textMuted,
+      lineHeight: f.xs * 1.4,
+      marginTop: Spacing.xs,
       marginBottom: Spacing.lg,
-      borderRadius: Radius.md,
-      borderWidth: 1,
-      borderColor: Colors.borderAccent,
-      borderStyle: 'dashed',
-      backgroundColor: Colors.accentDim,
-    },
-    addMedText: {
-      color: Colors.accent,
-      fontSize: f.sm,
-      fontWeight: FontWeights.semibold,
     },
 
     timeButton: {

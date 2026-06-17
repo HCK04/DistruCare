@@ -49,23 +49,33 @@ export function getCountdown(targetTime: string): string {
   return `${hours} h ${minutes.toString().padStart(2, '0')}`;
 }
 
-export function getNextDoseInfo(amTime: string, pmTime: string): { label: string; time: string; countdown: string } {
+export function getNextDoseInfo(
+  amTime: string,
+  pmTime: string,
+  amActive: boolean = true,
+  pmActive: boolean = true,
+): { label: string; time: string; countdown: string } {
   const now = new Date();
   const amDate = timeStringToDate(amTime);
   const pmDate = timeStringToDate(pmTime);
 
+  // Une seule prise peut être active (matin OU soir) : on ignore celle qui
+  // n'a pas de médicament pour ne pas annoncer une dose inexistante.
   let nextLabel: string;
   let nextTime: string;
 
-  if (now < amDate) {
+  if (amActive && now < amDate) {
     nextLabel = 'Dose du matin';
     nextTime = amTime;
-  } else if (now < pmDate) {
+  } else if (pmActive && now < pmDate) {
     nextLabel = 'Dose du soir';
     nextTime = pmTime;
-  } else {
+  } else if (amActive) {
     nextLabel = 'Dose du matin (demain)';
     nextTime = amTime;
+  } else {
+    nextLabel = 'Dose du soir (demain)';
+    nextTime = pmTime;
   }
 
   return {

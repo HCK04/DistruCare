@@ -13,7 +13,7 @@ import DoseCard from '../components/DoseCard';
 import AdherenceRing from '../components/AdherenceRing';
 import HardwareStatusBar from '../hardware/HardwareStatusBar';
 import { useHardware } from '../hardware/HardwareContext';
-import { getAdherenceStats } from '../db/queries';
+import { getAdherenceStats, parseMedList } from '../db/queries';
 import { getNextDoseInfo, formatTime, timeStringToDate, formatDayLabel } from '../utils/dateHelpers';
 
 export default function DashboardScreen() {
@@ -52,10 +52,15 @@ export default function DashboardScreen() {
 
   useEffect(() => { loadStats(); }, [logs]);
 
+  // Une prise peut être absente (matin OU soir) ; seules les prises ayant un
+  // médicament sont affichées et entrent dans le calcul de la prochaine dose.
+  const amHasMed = parseMedList(schedule?.am_medication_name ?? '').length > 0;
+  const pmHasMed = parseMedList(schedule?.pm_medication_name ?? '').length > 0;
+
   useEffect(() => {
     if (!schedule) return;
     const update = () => {
-      const info = getNextDoseInfo(schedule.am_time, schedule.pm_time);
+      const info = getNextDoseInfo(schedule.am_time, schedule.pm_time, amHasMed, pmHasMed);
       setNextLabel(info.label);
       setNextTime(info.time);
       setCountdown(info.countdown);
@@ -63,7 +68,7 @@ export default function DashboardScreen() {
     update();
     const interval = setInterval(update, 30000);
     return () => clearInterval(interval);
-  }, [schedule]);
+  }, [schedule, amHasMed, pmHasMed]);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -159,28 +164,32 @@ export default function DashboardScreen() {
           <>
             {/* Lecture seule : la confirmation se fait UNIQUEMENT au bouton du
                 distributeur. L'utilisateur ne marque pas les prises dans l'app. */}
-            <DoseCard
-              type="AM"
-              scheduledTime={formatTime(timeStringToDate(schedule.am_time))}
-              log={amLog}
-              disabled
-              onMarkTaken={() => {}}
-              onMarkMissed={() => {}}
-              onMarkLate={() => {}}
-            />
-            <DoseCard
-              type="PM"
-              scheduledTime={formatTime(timeStringToDate(schedule.pm_time))}
-              log={pmLog}
-              disabled
-              onMarkTaken={() => {}}
-              onMarkMissed={() => {}}
-              onMarkLate={() => {}}
-            />
+            {amHasMed && (
+              <DoseCard
+                type="AM"
+                scheduledTime={formatTime(timeStringToDate(schedule.am_time))}
+                log={amLog}
+                disabled
+                onMarkTaken={() => {}}
+                onMarkMissed={() => {}}
+                onMarkLate={() => {}}
+              />
+            )}
+            {pmHasMed && (
+              <DoseCard
+                type="PM"
+                scheduledTime={formatTime(timeStringToDate(schedule.pm_time))}
+                log={pmLog}
+                disabled
+                onMarkTaken={() => {}}
+                onMarkMissed={() => {}}
+                onMarkLate={() => {}}
+              />
+            )}
           </>
         )}
 
-        {amLog && pmLog && (
+        {(!amHasMed || amLog) && (!pmHasMed || pmLog) && (
           <View style={styles.allDoneCard}>
             <Ionicons name="checkmark-circle" size={fonts.xl} color={Colors.taken} />
             <Text style={styles.allDoneText}>Toutes les doses du jour sont enregistrées. Bravo !</Text>

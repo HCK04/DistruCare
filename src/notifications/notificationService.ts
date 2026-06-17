@@ -34,67 +34,73 @@ export async function scheduleDoseReminders(
   const [pmHour, pmMin] = pmTime.split(':').map(Number);
 
   if (Platform.OS !== 'web') {
-    // Rappel du matin
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: 'Dose du matin',
-        body: `C'est l'heure de prendre votre ${amLabel}.`,
-        sound: true,
-      },
-      trigger: {
-        type: Notifications.SchedulableTriggerInputTypes.DAILY,
-        hour: amHour,
-        minute: amMin,
-      },
-    });
+    // On ne programme les rappels que pour les moments qui ont un médicament :
+    // la prise du matin OU celle du soir peut être absente.
+    if (amMedList.length) {
+      // Rappel du matin
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: 'Dose du matin',
+          body: `C'est l'heure de prendre votre ${amLabel}.`,
+          sound: true,
+        },
+        trigger: {
+          type: Notifications.SchedulableTriggerInputTypes.DAILY,
+          hour: amHour,
+          minute: amMin,
+        },
+      });
 
-    // Rappel du soir
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: 'Dose du soir',
-        body: `N'oubliez pas votre ${pmLabel} ce soir.`,
-        sound: true,
-      },
-      trigger: {
-        type: Notifications.SchedulableTriggerInputTypes.DAILY,
-        hour: pmHour,
-        minute: pmMin,
-      },
-    });
+      // 30-min follow-up AM
+      const amFollowup = amMin + 30 >= 60
+        ? { hour: amHour + 1, minute: (amMin + 30) % 60 }
+        : { hour: amHour, minute: amMin + 30 };
 
-    // 30-min follow-up AM
-    const amFollowup = amMin + 30 >= 60
-      ? { hour: amHour + 1, minute: (amMin + 30) % 60 }
-      : { hour: amHour, minute: amMin + 30 };
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: 'Rappel',
+          body: `Avez-vous pris votre ${amLabel} du matin ? Pensez à le confirmer dans Distrucare.`,
+          sound: true,
+        },
+        trigger: {
+          type: Notifications.SchedulableTriggerInputTypes.DAILY,
+          ...amFollowup,
+        },
+      });
+    }
 
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: 'Rappel',
-        body: `Avez-vous pris votre ${amLabel} du matin ? Pensez à le confirmer dans Distrucare.`,
-        sound: true,
-      },
-      trigger: {
-        type: Notifications.SchedulableTriggerInputTypes.DAILY,
-        ...amFollowup,
-      },
-    });
+    if (pmMedList.length) {
+      // Rappel du soir
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: 'Dose du soir',
+          body: `N'oubliez pas votre ${pmLabel} ce soir.`,
+          sound: true,
+        },
+        trigger: {
+          type: Notifications.SchedulableTriggerInputTypes.DAILY,
+          hour: pmHour,
+          minute: pmMin,
+        },
+      });
 
-    // 30-min follow-up PM
-    const pmFollowup = pmMin + 30 >= 60
-      ? { hour: pmHour + 1, minute: (pmMin + 30) % 60 }
-      : { hour: pmHour, minute: pmMin + 30 };
+      // 30-min follow-up PM
+      const pmFollowup = pmMin + 30 >= 60
+        ? { hour: pmHour + 1, minute: (pmMin + 30) % 60 }
+        : { hour: pmHour, minute: pmMin + 30 };
 
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: 'Rappel',
-        body: `Avez-vous pris votre ${pmLabel} du soir ? Pensez à le confirmer dans Distrucare.`,
-        sound: true,
-      },
-      trigger: {
-        type: Notifications.SchedulableTriggerInputTypes.DAILY,
-        ...pmFollowup,
-      },
-    });
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: 'Rappel',
+          body: `Avez-vous pris votre ${pmLabel} du soir ? Pensez à le confirmer dans Distrucare.`,
+          sound: true,
+        },
+        trigger: {
+          type: Notifications.SchedulableTriggerInputTypes.DAILY,
+          ...pmFollowup,
+        },
+      });
+    }
   }
 }
 
